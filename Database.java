@@ -3,11 +3,21 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Database {
+	private Connection con;
+	private String username;
+	private String password;
+	
+	public Database(String username, String password){
+		// Initialize database variables
+		this.username = username;
+		this.password = password;
+		
+		// connect to server
+		this.connectToDatabase(this.username, this.password);
+	}
+	
 
-	public static void main(String[] argv) {
-
-		System.out.println("-------- Oracle JDBC Connection Testing ------");
-
+	public void connectToDatabase(String username, String password){
 		try {
 
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -22,12 +32,10 @@ public class Database {
 
 		System.out.println("Oracle JDBC Driver Registered!");
 
-		Connection connection = null;
-
 		try {
 
-			Connection con = DriverManager.getConnection(
-					  "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1521:ug", "ora_q0b9", "a48197123");
+			this.con = DriverManager.getConnection(
+					  "jdbc:oracle:thin:@localhost:1522:ug", "ora_q0b9", "a48197123");
 
 		} catch (SQLException e) {
 
@@ -37,11 +45,10 @@ public class Database {
 
 		}
 
-		if (connection != null) {
+		if (con != null) {
 			System.out.println("You made it, take control your database now!");
 		} else {
 			System.out.println("Failed to make connection!");
 		}
 	}
-
 }
