@@ -16,7 +16,28 @@ public class Database {
 		this.connectToDatabase(this.username, this.password);
 	}
 	
-
+	public boolean authenticateLogin(String username, String password){
+		return false;
+		
+	}
+	
+	public String[] getPlayerList(){
+		return null;
+		
+	}
+	
+	public String[] getCharacterStats(){
+		return null;
+	}
+	
+	public String[] getLog(){
+		return null;
+	}
+	
+	public String[] getTeams(){
+		return null;
+	}
+	
 	public void connectToDatabase(String username, String password){
 		try {
 
