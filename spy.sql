@@ -1,4 +1,4 @@
-/*-- users
+-- users
 drop table player;
 drop table admin;
 -- characters and roles
@@ -15,7 +15,7 @@ drop table intercepts;
 -- multi player groupings
 drop table team;
 drop table government;
-*/
+
 -------------------------
 create table player
 	(email char(20) not null,
@@ -118,49 +118,37 @@ create table government
 	tax int null,
 	primary key (name),
 	foreign key (president) references character ON DELETE CASCADE);
+-----------------------------------------------------
 
+insert into team
+values('best team');
 
+insert into team
+values('worst team');
 
+insert into team
+values('other team');
 
+insert into players
+values('player1@gmail.com', 'player1', 'password1');
 
+insert into players
+values('player2@gmail.com', 'player2', 'password2');
 
+insert into players
+values('player3@gmail.com', 'player3', 'password3');
 
+insert into character
+values('11', 'Character 1a', '10', '100', 'player1@gmail.com', 'best team');
 
+insert into character
+values('12', 'Character 1b', '8', '150', 'player1@gmail.com', 'best team');
 
+insert into character
+values('21', 'Character 2a', '4', '80', 'player2@gmail.com', 'worst team');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+insert into character
+values('21', 'Character 2a', '4', '80', 'player2@gmail.com', 'worst team');
 
 
 
