@@ -1,3 +1,4 @@
+package gui;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -10,7 +11,7 @@ public class Splash extends JFrame {
         
         btnLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                LoginDialog loginDlg = new LoginDialog(frame);
+                LoginDialog loginDlg = new LoginDialog(frame, null);
                 loginDlg.setVisible(true);
                 if(loginDlg.isSucceeded()){
                     // successful login, go to new window

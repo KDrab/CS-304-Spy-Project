@@ -1,16 +1,17 @@
+package gui;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-class LoginDialog extends JDialog  {
+import database.Database;
+
+public class LoginDialog extends JDialog  {
     
-    public static boolean authenticate(String username, String password) {
+    public  boolean authenticate(String username, String password) {
         // query DB for user info
-        if (username.equals("bob") && password.equals("secret")) {
-            return true;
-        }
-        return false;
+    	return this.database.authenticateLogin(username, password);
     }
     
     private JTextField uname;
@@ -18,10 +19,12 @@ class LoginDialog extends JDialog  {
     private JLabel unameLb, passLb;
     private JButton btnLogin, btnCancel;
     private boolean succeeded;
+    private Database database;
     
-    public LoginDialog(Frame parent) {
+    public LoginDialog(Frame parent, Database db) {
         super(parent, "Login", true);
-
+        
+        this.database = db;
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints cs = new GridBagConstraints();
         
@@ -57,7 +60,7 @@ class LoginDialog extends JDialog  {
         btnLogin.addActionListener(new ActionListener() {
             
             public void actionPerformed(ActionEvent e) {
-                if (LoginDialog.authenticate(getUsername(), getPassword())) {
+                if (authenticate(getUsername(), getPassword())) {
                     JOptionPane.showMessageDialog(LoginDialog.this, "Welcome " + getUsername() + "!", "Login", JOptionPane.INFORMATION_MESSAGE);
                     succeeded = true;
                     dispose();

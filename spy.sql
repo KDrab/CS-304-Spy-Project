@@ -1,3 +1,4 @@
+/*
 -- users
 drop table player;
 drop table admin;
@@ -15,6 +16,7 @@ drop table intercepts;
 -- multi player groupings
 drop table team;
 drop table government;
+*/
 
 -------------------------
 create table player
