@@ -142,15 +142,19 @@ insert into character
 values('11', 'Character 1a', '10', '100', 'player1@gmail.com', 'best team');
 
 insert into character
-values('12', 'Character 1b', '8', '150', 'player1@gmail.com', 'best team');
+values('12', 'Character 1b', '8', '150', 'player1@gmail.com', 'worst team');
 
 insert into character
 values('21', 'Character 2a', '4', '80', 'player2@gmail.com', 'worst team');
 
 insert into character
-values('21', 'Character 2a', '4', '80', 'player2@gmail.com', 'worst team');
+values('22', 'Character 2b', '15', '200', 'player2@gmail.com', 'other team');
 
+insert into character
+values('23', 'Character 2c', '3', '50', 'player2@gmail.com', 'best team');
 
+insert into character
+values('31', 'Character 3a', '1', '20', 'player3@gmail.com', 'other team');
 
 
 
