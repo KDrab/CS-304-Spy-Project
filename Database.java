@@ -1,6 +1,8 @@
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class Database {
 	private Connection con;
@@ -17,25 +19,101 @@ public class Database {
 	}
 	
 	public boolean authenticateLogin(String username, String password){
-		return false;
-		
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT Lname FROM players WHERE email = username");
+        
+            String email = new String();
+            String pass = new String();
+        
+            while (rs.next()) {
+                email = rs.getString("email");
+                pass = rs.getString("password");
+            }
+        
+            if (email == username && password == pass) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return false;
+        }
 	}
 	
-	public String[] getPlayerList(){
-		return null;
-		
+	public ArrayList<String> getPlayerList(){
+        // returns a list of all players by email
+        try {
+            ArrayList<String> players = new ArrayList<String>();
+            
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT email FROM player");
+        
+            while (rs.next()) {
+                players.add(rs.getString("email"));
+            }
+        
+            return players;
+            
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return null;
+        }
 	}
 	
-	public String[] getCharacterStats(){
-		return null;
+	public ArrayList<String> getCharacterStats(int id){
+        //returns all the stats for a character given an id
+        try {
+            ArrayList<String> stats = new ArrayList<String>();
+            int i = 0;
+        
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM character WHERE id = " + id);
+        
+            while (rs.next()) {
+                stats.add(rs.getString("id"));
+                stats.add(rs.getString("name"));
+                stats.add(rs.getString("lvl"));
+                stats.add(rs.getString("cash"));
+                stats.add(rs.getString("email"));
+                stats.add(rs.getString("teamName"));
+            }
+            
+            return stats;
+            
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return null;
+        }
 	}
 	
 	public String[] getLog(){
 		return null;
 	}
 	
-	public String[] getTeams(){
-		return null;
+	public ArrayList<String> getTeams(){
+        // return list of all team names
+        try {
+            ArrayList<String> teams = new ArrayList<String>();
+        
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT name FROM team");
+        
+            while (rs.next()) {
+                teams.add(rs.getString("name"));
+            }
+            
+            return teams;
+            
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return null;
+        }
 	}
 	
 	public void connectToDatabase(String username, String password){
