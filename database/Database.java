@@ -69,7 +69,6 @@ public class Database {
         //returns all the stats for a character given an id
         try {
             ArrayList<String> stats = new ArrayList<String>();
-            int i = 0;
         
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM character WHERE id = " + id);
@@ -92,8 +91,27 @@ public class Database {
         }
 	}
 	
-	public String[] getLog(){
-		return null;
+	public ArrayList<String> getLog(int id){
+        // return list of a characters actions
+        try {
+            ArrayList<String> log = new ArrayList<String>();
+            
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM action WHERE id = " + id);
+            
+            while (rs.next()) {
+                log.add(rs.getString("id"));
+                log.add(rs.getString("time"));
+                log.add(rs.getString("action"));
+            }
+            
+            return log;
+            
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return null;
+        }
 	}
 	
 	public ArrayList<String> getTeams(){
