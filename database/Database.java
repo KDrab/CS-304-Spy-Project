@@ -22,21 +22,22 @@ public class Database {
 	public boolean authenticateLogin(String username, String password){
         try {
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT Lname FROM players WHERE email = username");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM player");
         
             String email = new String();
             String pass = new String();
-        
             while (rs.next()) {
-                email = rs.getString("email");
-                pass = rs.getString("password");
+                email = rs.getString("username").trim();
+                pass = rs.getString("password").trim();
+                System.out.println(email + pass);
+                System.out.println(username + password);
+                
+                if (email.equals(username) && password.equals(pass)) {
+                    return true;
+                }
             }
-        
-            if (email == username && password == pass) {
-                return true;
-            } else {
-                return false;
-            }
+            return false;
+
         } catch (Exception e) {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());
