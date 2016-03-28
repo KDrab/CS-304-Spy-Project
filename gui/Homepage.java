@@ -135,4 +135,39 @@ public class Homepage extends JFrame {
     	panel.add(pane, cs);
     	frame.setVisible(true);	
     }
+    
+    public void displayAssassinationButton(){
+    	JButton assassinateButton = new JButton("Assassinatae");
+    	assassinateButton.setLocation(200,150);
+    	assassinateButton.addActionListener(new ActionListener(){
+    	public void actionPerformed(ActionEvent e) {
+    		panel.removeAll();
+    		String name = "";
+    		
+    		AssassinationDialog ad = new AssassinationDialog(frame, database, name);
+    	}});
+    	cs.gridx = 0;
+    	cs.gridy = 0;
+    	panel.add(assassinateButton, cs); 
+    	frame.setVisible(true);
+    	
+    }
+    
+    public void displayInterceptButton(){
+    	JButton interceptButton = new JButton("Intercept");
+    	interceptButton.setLocation(200,150);
+    	interceptButton.addActionListener(new ActionListener(){
+    	public void actionPerformed(ActionEvent e) {
+    		panel.removeAll();
+    		String name = "";
+    		InterceptDialog id = new InterceptDialog(frame, database, name);
+    		
+    	}});
+    	cs.gridx = 0;
+    	cs.gridy = 0;
+    	panel.add(interceptButton, cs); 
+    	frame.setVisible(true);
+    	
+    	
+    }
 }
