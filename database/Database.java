@@ -125,30 +125,31 @@ public class Database {
             return players;
             
         } catch (Exception e) {
-            System.err.println("Got an exception! ");
+            System.err.println("Got a PLayerList exception! ");
             System.err.println(e.getMessage());
             return null;
         }
 	}
 	
 	public ArrayList<String> getCharList(String usrname){
-		// return list of a players characters
+		// return list of a player's characters
 		try {
             ArrayList<String> chars = new ArrayList<String>();
         
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT id, name, level FROM character WHERE username = " + usrname);
+            System.out.println("stmt created");
+            ResultSet rs = stmt.executeQuery("SELECT c.id, c.name, c.lvl FROM character as c, player as p WHERE p.username = '" + usrname + "', p.email = c.email");
         
             while (rs.next()) {
                 chars.add(rs.getString("id"));
                 chars.add(rs.getString("name"));
-                chars.add(rs.getString("level"));
+                chars.add(rs.getString("lvl"));
             }
             
             return chars;
             
         } catch (Exception e) {
-            System.err.println("Got an exception! ");
+            System.err.println("Got a CharList exception! ");
             System.err.println(e.getMessage());
             return null;
         }

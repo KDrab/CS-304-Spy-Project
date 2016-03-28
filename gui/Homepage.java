@@ -48,11 +48,15 @@ public class Homepage extends JFrame {
     		ld.setVisible(true);
     		if(ld.isSucceeded()){
     			if (ld.getIsAdmin()){
-    				
+    				panel.removeAll();
+        			displayLogoutButton();
+        			displayPlayerList();
+        			frame.repaint();
+        			return;
     			}
     			panel.removeAll();
     			displayLogoutButton();
-    			displayPlayerList();
+    			displayCharList(ld.getUsername());
     			frame.repaint();
     		}
     	}});
@@ -104,6 +108,31 @@ public class Homepage extends JFrame {
     	panel.add(pane, cs);
     	frame.setVisible(true);
     	
+    	MouseListener tableMouseListener = new MouseAdapter() {
+    		public void mouseClicked(MouseEvent e) {
+    			int row = playerList.getSelectedRow();
+    			String selected = players.get(row);
+
+    			displayCharList(selected);
+    		}
+    	};
+    	
+    	playerList.addMouseListener(tableMouseListener);
     }
     
+    public void displayCharList(String username) {
+    	ArrayList<String> chars = database.getCharList(username);
+    	DefaultTableModel charListModel = new DefaultTableModel(new String[]{"ID", "Name", "Level"}, 0);
+    	JTable charList = new JTable(charListModel);
+    	for (String character : chars) {
+    		charListModel.addRow(new Object[] {character});
+    	}
+    	cs.gridx = 0;
+    	cs.gridy = 1;
+    	JScrollPane pane = new JScrollPane(charList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+    													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    	pane.setPreferredSize(new Dimension(appWidth/2, chars.size() * 16));
+    	panel.add(pane, cs);
+    	frame.setVisible(true);	
+    }
 }
