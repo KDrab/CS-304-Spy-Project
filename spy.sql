@@ -131,13 +131,13 @@ values('worst team');
 insert into team
 values('other team');
 
-insert into players
+insert into player
 values('player1@gmail.com', 'player1', 'password1');
 
-insert into players
+insert into player
 values('player2@gmail.com', 'player2', 'password2');
 
-insert into players
+insert into player
 values('player3@gmail.com', 'player3', 'password3');
 
 insert into character

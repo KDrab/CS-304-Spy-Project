@@ -115,13 +115,13 @@ public class Database {
         }
 	}
 	
-	public ArrayList<String> getTeams(){
+	public ArrayList<String> getTeamsandNumberofPlayers(){
         // return list of all team names
         try {
             ArrayList<String> teams = new ArrayList<String>();
         
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT name FROM team");
+            ResultSet rs = stmt.executeQuery("SELECT t.name, c.count(*) FROM team t, character c WHERE t.name = c.teamName");
         
             while (rs.next()) {
                 teams.add(rs.getString("name"));
@@ -135,6 +135,8 @@ public class Database {
             return null;
         }
 	}
+	
+	
 	
 	public void connectToDatabase(String username, String password){
 		try {
