@@ -135,10 +135,12 @@ public class Database {
 		// return list of a player's characters
 		try {
             ArrayList<String> chars = new ArrayList<String>();
-        
+            
             Statement stmt = con.createStatement();
-            System.out.println("stmt created");
-            ResultSet rs = stmt.executeQuery("SELECT c.id, c.name, c.lvl FROM character as c, player as p WHERE p.username = '" + usrname + "', p.email = c.email");
+            String query = "select character.id, character.name, character.lvl "
+            				+ "From character, player "
+            				+ "Where player.username = " + "'" + usrname + "' " + "and player.email = character.email";
+            ResultSet rs = stmt.executeQuery(query);
         
             while (rs.next()) {
                 chars.add(rs.getString("id"));
