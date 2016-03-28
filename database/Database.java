@@ -111,18 +111,41 @@ public class Database {
 	}
 
 	public ArrayList<String> getPlayerList(){
-        // returns a list of all players by email
+        // returns a list of all players by username
         try {
             ArrayList<String> players = new ArrayList<String>();
             
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT email FROM player");
+            ResultSet rs = stmt.executeQuery("SELECT username FROM player");
         
             while (rs.next()) {
-                players.add(rs.getString("email"));
+                players.add(rs.getString("username"));
             }
         
             return players;
+            
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return null;
+        }
+	}
+	
+	public ArrayList<String> getCharList(String usrname){
+		// return list of a players characters
+		try {
+            ArrayList<String> chars = new ArrayList<String>();
+        
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT id, name, level FROM character WHERE username = " + usrname);
+        
+            while (rs.next()) {
+                chars.add(rs.getString("id"));
+                chars.add(rs.getString("name"));
+                chars.add(rs.getString("level"));
+            }
+            
+            return chars;
             
         } catch (Exception e) {
             System.err.println("Got an exception! ");
