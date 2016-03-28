@@ -47,6 +47,9 @@ public class Homepage extends JFrame {
     		LoginDialog ld = new LoginDialog(frame, database);
     		ld.setVisible(true);
     		if(ld.isSucceeded()){
+    			if (ld.getIsAdmin()){
+    				
+    			}
     			panel.removeAll();
     			displayLogoutButton();
     			displayPlayerList();

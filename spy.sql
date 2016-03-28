@@ -23,12 +23,7 @@ create table player
 	(email char(20) not null,
 	username char(20) not null,
 	password char(15) not null,
-	primary key (email));
-
-create table admin
-	(email char(20) not null,
-	username char(20) not null,
-	password char(15) not null,
+	admin	 int null,
 	primary key (email));
 
 ----------------------------

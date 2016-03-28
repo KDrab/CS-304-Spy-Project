@@ -44,6 +44,28 @@ public class Database {
         }
 	}
 	
+	public boolean authenticateAdmin(String username2, String password2) {
+		try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM player");
+            
+            while (rs.next()){
+            	email = rs.getString("username").trim();
+            	int admin = rs.getInt("admin");
+            	if (admin != 0 && email.equals(username2)){
+            	System.out.println("ADMIN");
+            	return true;
+            	}
+
+            }
+        	System.out.println("NAADMIN");
+        	return false;
+		}
+		catch (SQLException e){
+			return false;
+		}
+	}
+	
 	public boolean authenticateSignup(String email, String username, String password){
 		
 		try {
@@ -215,4 +237,6 @@ public class Database {
 			System.out.println("Failed to make connection!");
 		}
 	}
+
+
 }

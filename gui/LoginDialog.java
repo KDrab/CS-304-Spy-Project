@@ -14,6 +14,7 @@ public class LoginDialog extends JDialog  {
     private JLabel unameLb, passLb;
     private JButton btnLogin, btnCancel;
     private boolean succeeded;
+    private boolean isAdmin;
     private Database database;
     
     public LoginDialog(Frame parent, Database db) {
@@ -57,6 +58,9 @@ public class LoginDialog extends JDialog  {
             public void actionPerformed(ActionEvent e) {
                 if (authenticate(getUsername(), getPassword())) {
                     JOptionPane.showMessageDialog(LoginDialog.this, "Welcome " + getUsername() + "!", "Login", JOptionPane.INFORMATION_MESSAGE);
+                    if (checkAdmin(getUsername(), getPassword())){
+                    isAdmin = true;
+                    }
                     succeeded = true;
                     dispose();
                 } else {
@@ -94,6 +98,10 @@ public class LoginDialog extends JDialog  {
     	return this.database.authenticateLogin(username, password);
     }
     
+	public boolean checkAdmin(String username, String password) {
+		return this.database.authenticateAdmin(username, password);
+	}
+    
     public String getUsername() {
         return uname.getText().trim();
     }
@@ -104,5 +112,9 @@ public class LoginDialog extends JDialog  {
     
     public boolean isSucceeded() {
         return succeeded;
+    }
+    
+    public boolean getIsAdmin(){
+    	return isAdmin;
     }
 }
