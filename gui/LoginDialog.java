@@ -55,9 +55,6 @@ public class LoginDialog extends JDialog  {
         btnLogin.addActionListener(new ActionListener() {
             
             public void actionPerformed(ActionEvent e) {
-            	System.out.println("about to call authenticate");
-            	System.out.println(getUsername());
-            	System.out.println(getPassword());
                 if (authenticate(getUsername(), getPassword())) {
                     JOptionPane.showMessageDialog(LoginDialog.this, "Welcome " + getUsername() + "!", "Login", JOptionPane.INFORMATION_MESSAGE);
                     succeeded = true;
@@ -94,7 +91,6 @@ public class LoginDialog extends JDialog  {
     
     public  boolean authenticate(String username, String password) {
         // query DB for user info
-    	System.out.println("calling authenticateLogin");
     	return this.database.authenticateLogin(username, password);
     }
     

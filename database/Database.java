@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Database {
 	private Connection con;
+	private String email;
 	private String username;
 	private String password;
 	
@@ -29,8 +30,6 @@ public class Database {
             while (rs.next()) {
                 email = rs.getString("username").trim();
                 pass = rs.getString("password").trim();
-                System.out.println(email + pass);
-                System.out.println(username + password);
                 
                 if (email.equals(username) && password.equals(pass)) {
                     return true;
@@ -45,6 +44,50 @@ public class Database {
         }
 	}
 	
+	public boolean authenticateSignup(String email, String username, String password){
+		
+		try {
+			if (checkUsername(email, username)){
+				return false;
+			}
+			createAccount(email, username, password);
+			return true;
+		}
+		catch (SQLException e){
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return false;
+			
+		}
+		
+	}
+	
+	private boolean checkUsername(String email2, String username2) throws SQLException {
+		Statement stmt = con.createStatement();
+        String queryString = "select * from player";
+        ResultSet rs = stmt.executeQuery(queryString);
+        
+        while(rs.next()){
+            email = rs.getString("email").trim();
+            username = rs.getString("username").trim();
+            
+            if (email.equals(email2) || username.equals(username2)) {
+                return true;
+            }
+        	
+        }
+		return false;
+	}
+
+	private void createAccount(String email, String username, String password) throws SQLException {
+        Statement stmt = con.createStatement();
+        String queryString = "insert into player values(" + "'" + email + "', "
+        												+ "'" + username + "', "
+        												+ "'" + password + "'" + ")";
+        ResultSet rs = stmt.executeQuery(queryString);
+        
+	}
+
 	public ArrayList<String> getPlayerList(){
         // returns a list of all players by email
         try {

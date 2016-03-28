@@ -10,22 +10,25 @@ import database.Database;
 
 public class Homepage extends JFrame {
 	public Database database; 
-	JFrame frame;
-	JPanel panel;
-	JTable playerList;
-	DefaultTableModel playerListModel;
+	public JFrame frame;
+	public JPanel panel;
+	public GridBagConstraints cs;
+	public JTable playerList;
+	public DefaultTableModel playerListModel;
+	public int appWidth = 640;
+	public int appHeight = 480;
 
     public Homepage(String uname, Database db) {
         this.database = db;
         
         frame = new JFrame(uname + " - Homepage");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 300);
+        frame.setSize(appWidth, appHeight);
         frame.setLayout(new FlowLayout());
         frame.setVisible(true);
         
         panel = new JPanel(new GridBagLayout());
-        GridBagConstraints cs = new GridBagConstraints();
+        cs = new GridBagConstraints();
         frame.add(panel);
         
         this.displayLoginButton();
@@ -35,7 +38,8 @@ public class Homepage extends JFrame {
     
     public void displayLoginButton(){
     	JButton loginButton = new JButton("login");
-    	loginButton.setLocation(200, 150);
+    	cs.gridx = 0;
+    	cs.gridy = 0;
     	panel.add(loginButton);
     	loginButton.addActionListener(new ActionListener()
     	{
@@ -55,12 +59,14 @@ public class Homepage extends JFrame {
     
     public void displaySignupButton(){
     	JButton signupButton = new JButton("Sign Up");
-    	signupButton.setLocation(300, 150);
+    	cs.gridx = 1;
+    	cs.gridy = 0;
+    	panel.add(signupButton, cs);
     	signupButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		SignupDialog sd = new SignupDialog(frame, database);
+    		sd.setVisible(true);
     	}});
-    	panel.add(signupButton);
     	frame.setVisible(true);	 	
     }
     
@@ -73,23 +79,26 @@ public class Homepage extends JFrame {
     		displayLoginButton();
     		displaySignupButton();
     	}});
-    	panel.add(logoutButton); 
+    	cs.gridx = 0;
+    	cs.gridy = 0;
+    	panel.add(logoutButton, cs); 
     	frame.setVisible(true);
     }
     
     
     public void displayPlayerList() {
     	ArrayList<String> players = database.getPlayerList();
-    	playerList = new JTable();
-    	playerListModel = new DefaultTableModel(0, 0);
-    	String header[] = new String[] {"Player"};
-    	playerListModel.setColumnIdentifiers(header);
-    	playerList.setModel(playerListModel);
+    	playerListModel = new DefaultTableModel(new String[]{"Players"}, 0);
+    	playerList = new JTable(playerListModel);
     	for (String player : players) {
     		playerListModel.addRow(new Object[] {player});
-    		System.out.println(player);
     	}
-    	panel.add(playerList);
+    	cs.gridx = 0;
+    	cs.gridy = 1;
+    	JScrollPane pane = new JScrollPane(playerList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+    													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    	pane.setPreferredSize(new Dimension(appWidth/3, players.size() * 16));
+    	panel.add(pane, cs);
     	frame.setVisible(true);
     	
     }
