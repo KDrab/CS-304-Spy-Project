@@ -157,17 +157,17 @@ values(31, 'Character 3a', 1, 20, 'player3@gmail.com', 'other team');
 -----------------------------------------------------
 
 insert into spy
-values(21, 'Character 2a', 21, 'player3@gmail.com');
+values(21, 'Character 2a', 21, 'the gov');
 
 insert into politician
-values(22, 'Character 2b', 8, 'player3@gmail.com');
+values(22, 'Character 2b', 8, 'the gov');
 
 insert into businessman
-values(23, 'Character 2c', 43, 'player3@gmail.com');
+values(23, 'Character 2c', 43, 'the gov');
 -----------------------------------------------------
 
 insert into government
-values('the gov', 'the prez', 2, 10);
+values('the gov', 22, 2, 10);
 
 
 
