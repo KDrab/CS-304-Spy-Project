@@ -2,6 +2,8 @@ package gui;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.lang.Object;
+import java.lang.Math;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,9 +16,10 @@ public class Homepage extends JFrame {
 	public JPanel panel;
 	public GridBagConstraints cs;
 	public JTable playerList;
-	public DefaultTableModel playerListModel;
+	public TableView playerListModel;
 	public int appWidth = 640;
 	public int appHeight = 480;
+	public boolean isAdmin = false;
 
     public Homepage(String uname, Database db) {
         this.database = db;
@@ -52,11 +55,12 @@ public class Homepage extends JFrame {
         			displayLogoutButton();
         			displayPlayerList();
         			frame.repaint();
+        			isAdmin = true;
         			return;
     			}
     			panel.removeAll();
     			displayLogoutButton();
-    			displayCharList(ld.getUsername());
+    			displayCharList(ld.getUsername(), 0 , 1);
     			frame.repaint();
     		}
     	}});
@@ -83,6 +87,7 @@ public class Homepage extends JFrame {
     	logoutButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
+    		isAdmin = false;
     		displayLoginButton();
     		displaySignupButton();
     	}});
@@ -95,7 +100,7 @@ public class Homepage extends JFrame {
     
     public void displayPlayerList() {
     	ArrayList<String> players = database.getPlayerList();
-    	playerListModel = new DefaultTableModel(new String[]{"Players"}, 0);
+    	playerListModel = new TableView(new String[]{"Players"}, 0);
     	playerList = new JTable(playerListModel);
     	for (String player : players) {
     		playerListModel.addRow(new Object[] {player});
@@ -104,7 +109,7 @@ public class Homepage extends JFrame {
     	cs.gridy = 1;
     	JScrollPane pane = new JScrollPane(playerList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
     													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    	pane.setPreferredSize(new Dimension(appWidth/3, players.size() * 16));
+    	pane.setPreferredSize(new Dimension(appWidth/3, Math.min(20 + players.size() * 16, 132)));
     	panel.add(pane, cs);
     	frame.setVisible(true);
     	
@@ -112,28 +117,88 @@ public class Homepage extends JFrame {
     		public void mouseClicked(MouseEvent e) {
     			int row = playerList.getSelectedRow();
     			String selected = players.get(row);
-
-    			displayCharList(selected);
+    			
+    			panel.removeAll();
+    			displayLogoutButton();
+    			cs.gridx = 0;
+    	    	cs.gridy = 1;
+    			panel.add(pane, cs);
+    			displayCharList(selected, 0, 11);
+    			frame.repaint();
+    			
     		}
     	};
     	
     	playerList.addMouseListener(tableMouseListener);
     }
     
-    public void displayCharList(String username) {
+    public void displayCharList(String username, int x, int y) {
     	ArrayList<String> chars = database.getCharList(username);
-    	DefaultTableModel charListModel = new DefaultTableModel(new String[]{"ID", "Name", "Level"}, 0);
+    	TableView charListModel = new TableView(new String[]{"ID", "Name", "Level"}, 0);
+    	
     	JTable charList = new JTable(charListModel);
-    	for (String character : chars) {
-    		charListModel.addRow(new Object[] {character});
+    	
+    	for (int i = 0; i < chars.size(); i = i + 3) {
+    		String[] toAdd = new String[3];
+    		toAdd[0] = chars.get(i);
+    		toAdd[1] = chars.get(i+1);
+    		toAdd[2] = chars.get(i+2);
+    		charListModel.addRow(toAdd);
     	}
-    	cs.gridx = 0;
-    	cs.gridy = 1;
+    	
+    	cs.gridx = x;
+    	cs.gridy = y;
     	JScrollPane pane = new JScrollPane(charList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
     													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    	pane.setPreferredSize(new Dimension(appWidth/2, chars.size() * 16));
+    	pane.setPreferredSize(new Dimension(appWidth/2, Math.min(20 + chars.size() * 16 / 3, 132)));
     	panel.add(pane, cs);
-    	frame.setVisible(true);	
+    	frame.setVisible(true);
+    	
+    	MouseListener tableMouseListener = new MouseAdapter() {
+    		public void mouseClicked(MouseEvent e) {
+    			int row = charList.getSelectedRow();
+    			int col = 0;
+    			int selected = Integer.parseInt(charList.getModel().getValueAt(row, col).toString().trim());
+    			
+    			// check type of player here
+    			
+    			panel.removeAll();
+    			displayLogoutButton();
+    			if (isAdmin) {
+    				displayPlayerList();
+    			}
+    			cs.gridx = 0;
+    	    	cs.gridy = 10;
+    			panel.add(pane, cs);
+    			displayCharStats(selected, 0, 20);
+    			frame.repaint();
+    		}
+    	};
+    	
+    	charList.addMouseListener(tableMouseListener);
+    }
+    
+    public void displayCharStats(int id, int x, int y) {
+    	ArrayList<String> values = database.getCharacterStats(id);
+		System.out.println(values);
+		
+		TableView statListModel = new TableView(new String[]{"ID", "Name", "Level", "Cash", "Email", "Team"}, 0);
+		JTable statList = new JTable(statListModel);
+		    			
+		String[] stats = new String[6];
+		
+		for (int i = 0; i < 6; i++) {
+    		stats[i] = values.get(i).toString().trim();
+    	}
+		statListModel.addRow(stats);
+		
+		cs.gridx = x;
+    	cs.gridy = y;
+    	JScrollPane pane = new JScrollPane(statList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+    													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    	pane.setPreferredSize(new Dimension(appWidth, 36));
+    	panel.add(pane, cs);
+    	frame.setVisible(true);
     }
     
     public void displayAssassinationButton(){
