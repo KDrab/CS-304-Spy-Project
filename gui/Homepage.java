@@ -180,17 +180,17 @@ public class Homepage extends JFrame {
     				// character is a spy
     				panel.setBackground(Color.red);
     				displayAssassinationButton(0, 12);
-    				displayInterceptButton(1, 12);
+    				displayInterceptButton(0, 13);
     			} else if (type == 2) {
     				// character is a politician
     				panel.setBackground(Color.black);
     				displaySpeechButton(0, 12);
-    				displayCampaignButton(1, 12);
+    				displayCampaignButton(0, 13);
     			} else if (type == 3) {
     				// character is a businessman
     				panel.setBackground(Color.blue);
     				displayFundPoliticianButton(0, 12);
-    				displayPaySpyButton(1, 12);
+    				displayPaySpyButton(0, 13);
     			}
     			
     			frame.repaint();
