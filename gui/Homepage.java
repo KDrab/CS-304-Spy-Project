@@ -54,7 +54,7 @@ public class Homepage extends JFrame {
     			if (ld.getIsAdmin()){
     				panel.removeAll();
         			displayLogoutButton();
-        			displayPlayerList();
+        			displayTeamList();
         			displayMessageButton(1, 0);
         			frame.repaint();
         			isAdmin = true;
@@ -99,6 +99,73 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
+    public void displayTeamList() {
+    	ArrayList<String> teams = database.getTeams();
+    	TableView teamListModel = new TableView(new String[]{"Teams"}, 0);
+    	JTable teamList = new JTable(teamListModel);
+    	for (String team : teams) {
+    		teamListModel.addRow(new Object[] {team});
+    	}
+    	
+        System.out.println("Top displayTeamList");
+    	
+    	cs.gridx = 0;
+    	cs.gridy = 1;
+    	JScrollPane pane = new JScrollPane(teamList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+    													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    	pane.setPreferredSize(new Dimension(appWidth/3, Math.min(20 + teams.size() * 16, 132)));
+    	panel.add(pane, cs);
+    	frame.setVisible(true);
+    	
+        System.out.println("Bottom displayTeamList");
+    	
+    	MouseListener tableMouseListener = new MouseAdapter() {
+    		public void mouseClicked(MouseEvent e) {
+    			int row = teamList.getSelectedRow();
+    			String selected = teams.get(row);
+    			
+                System.out.println("In MouseListener...");
+    			
+    			panel.removeAll();
+    			displayLogoutButton();
+    			cs.gridx = 0;
+    	    	cs.gridy = 1;
+    			panel.add(pane, cs);
+    			displayTeamStats(selected, 0, 11);
+    			frame.repaint();
+    			
+    		}
+    	};
+    	
+    	teamList.addMouseListener(tableMouseListener);
+    }
+    
+    public void displayTeamStats(String team, int x, int y) {
+    	ArrayList<String> stats = database.getTeamStats(team);
+    	TableView statListModel = new TableView(new String[]{"Name", "Size", "Avg. Level", "Total Cash"}, 0);
+    	JTable statList = new JTable(statListModel);
+    	
+    	System.out.println("In displayTeamStats, querying done.");
+    	
+    	for (int i = 0; i < stats.size(); i = i + 4) {
+    		System.out.println("In for...");
+    		String[] toAdd = new String[4];
+    		toAdd[0] = stats.get(i);
+    		toAdd[1] = stats.get(i+1);
+    		toAdd[2] = stats.get(i+2);
+    		toAdd[3] = stats.get(i+3);
+    		System.out.println("toAdd[] full.");
+    		statListModel.addRow(toAdd);
+    	}
+    	
+    	cs.gridx = x;
+    	cs.gridy = y;
+    	JScrollPane pane = new JScrollPane(statList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+    													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    	pane.setPreferredSize(new Dimension(appWidth/2, 36));
+    	panel.add(pane, cs);
+    	frame.setVisible(true);
+    }
     
     public void displayPlayerList() {
     	ArrayList<String> players = database.getPlayerList();

@@ -206,19 +206,71 @@ public class Database {
         }
 	}
 	
-	public ArrayList<String> getTeamsandNumberofPlayers(){
+	public ArrayList<String> getTeams(){
         // return list of all team names
         try {
             ArrayList<String> teams = new ArrayList<String>();
         
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT t.name, c.count(*) FROM team t, character c WHERE t.name = c.teamName");
+            ResultSet rs = stmt.executeQuery("SELECT name FROM team");
         
             while (rs.next()) {
                 teams.add(rs.getString("name"));
             }
             
             return teams;
+            
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return null;
+        }
+	}
+	
+	public ArrayList<String> getTeamStats(String team){
+        // return list of all team names
+        try {
+            ArrayList<String> stats = new ArrayList<String>();
+            stats.add(team);
+        
+            System.out.println("getTeamStats()...");
+
+            String q1 = "SELECT count(*) as total FROM character WHERE teamName = '" + team + "'";
+            String q2 = "SELECT avg(lvl) as avglvl FROM character WHERE teamName = '" + team + "'";
+            String q3 = "SELECT sum(cash) as allCash FROM character WHERE teamName = '" + team + "'";
+            
+            System.out.println("queries created.");
+            
+            Statement stmt = con.createStatement();
+            ResultSet rs1 = stmt.executeQuery(q1);
+            
+            System.out.println("q1 done.");
+            
+            Statement stmt2 = con.createStatement();
+            ResultSet rs2 = stmt2.executeQuery(q2);
+            
+            System.out.println("q2 done.");
+            
+            Statement stmt3 = con.createStatement();
+            ResultSet rs3 = stmt3.executeQuery(q3);
+            
+            System.out.println("All q done. All RS created.");
+            
+            while (rs1.next()) {
+                stats.add(rs1.getString("total"));
+            }
+            
+            while (rs2.next()) {
+                stats.add(rs2.getString("avglvl"));
+            }
+            
+            while (rs3.next()) {
+                stats.add(rs3.getString("allCash"));
+            }
+            
+            System.out.println("stats[] created.");
+            
+            return stats;
             
         } catch (Exception e) {
             System.err.println("Got an exception! ");
