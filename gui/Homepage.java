@@ -179,18 +179,18 @@ public class Homepage extends JFrame {
     			if (type == 1) {
     				// character is a spy
     				panel.setBackground(Color.red);
-    				displayAssassinationButton();
-    				displayInterceptButton();
+    				displayAssassinationButton(0, 12);
+    				displayInterceptButton(1, 12);
     			} else if (type == 2) {
     				// character is a politician
     				panel.setBackground(Color.black);
-    				displaySpeechButton();
-    				displayCampaignButton();
+    				displaySpeechButton(0, 12);
+    				displayCampaignButton(1, 12);
     			} else if (type == 3) {
     				// character is a businessman
     				panel.setBackground(Color.blue);
-    				displayFundPoliticianButton();
-    				displayPaySpyButton();
+    				displayFundPoliticianButton(0, 12);
+    				displayPaySpyButton(1, 12);
     			}
     			
     			frame.repaint();
@@ -223,7 +223,7 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
-    public void displayAssassinationButton(){
+    public void displayAssassinationButton(int x, int y){
     	JButton assassinateButton = new JButton("Assassinatae");
     	assassinateButton.setLocation(200,150);
     	assassinateButton.addActionListener(new ActionListener(){
@@ -233,14 +233,14 @@ public class Homepage extends JFrame {
     		
     		AssassinationDialog ad = new AssassinationDialog(frame, database, name);
     	}});
-    	cs.gridx = 0;
-    	cs.gridy = 0;
+    	cs.gridx = x;
+    	cs.gridy = y;
     	panel.add(assassinateButton, cs); 
     	frame.setVisible(true);
     	
     }
     
-    public void displayInterceptButton(){
+    public void displayInterceptButton(int x, int y){
     	JButton interceptButton = new JButton("Intercept");
     	interceptButton.setLocation(200,150);
     	interceptButton.addActionListener(new ActionListener(){
@@ -250,8 +250,8 @@ public class Homepage extends JFrame {
     		InterceptDialog id = new InterceptDialog(frame, database, name);
     		
     	}});
-    	cs.gridx = 0;
-    	cs.gridy = 0;
+    	cs.gridx = x;
+    	cs.gridy = y;
     	panel.add(interceptButton, cs); 
     	frame.setVisible(true);
     }
@@ -272,7 +272,7 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
-    public void displaySpeechButton() {
+    public void displaySpeechButton(int x, int y) {
     	JButton speechButton = new JButton("Give Speech");
     	speechButton.setLocation(200,150);
     	speechButton.addActionListener(new ActionListener(){
@@ -282,13 +282,13 @@ public class Homepage extends JFrame {
 //    		MessageDialogue id = new MessageDialogue(frame, database, name, "Give Speech");
     		
     	}});
-    	cs.gridx = 0;
-    	cs.gridy = 0;
+    	cs.gridx = x;
+    	cs.gridy = y;
     	panel.add(speechButton, cs); 
     	frame.setVisible(true);
     }
     
-    public void displayCampaignButton() {
+    public void displayCampaignButton(int x, int y) {
     	JButton campaignButton = new JButton("Campaign...");
     	campaignButton.setLocation(200,150);
     	campaignButton.addActionListener(new ActionListener(){
@@ -298,13 +298,13 @@ public class Homepage extends JFrame {
 //    		MessageDialogue id = new MessageDialogue(frame, database, name, "Marketing Campaign", 2);
     		
     	}});
-    	cs.gridx = 0;
-    	cs.gridy = 0;
+    	cs.gridx = x;
+    	cs.gridy = y;
     	panel.add(campaignButton, cs); 
     	frame.setVisible(true);
     }
     
-    public void displayFundPoliticianButton() {
+    public void displayFundPoliticianButton(int x, int y) {
     	JButton fundPoliBtn = new JButton("Donate...");
     	fundPoliBtn.setLocation(200,150);
     	fundPoliBtn.addActionListener(new ActionListener(){
@@ -314,13 +314,13 @@ public class Homepage extends JFrame {
 //    		MessageDialogue id = new MessageDialogue(frame, database, name, "Fund a Politician", 3);
     		
     	}});
-    	cs.gridx = 0;
-    	cs.gridy = 0;
+    	cs.gridx = x;
+    	cs.gridy = y;
     	panel.add(fundPoliBtn, cs); 
     	frame.setVisible(true);
     }
 
-    public void displayPaySpyButton() {
+    public void displayPaySpyButton(int x, int y) {
     	JButton paySpyBtn = new JButton("Pay a Spy");
     	paySpyBtn.setLocation(200,150);
     	paySpyBtn.addActionListener(new ActionListener(){
@@ -330,8 +330,8 @@ public class Homepage extends JFrame {
 //    		MessageDialogue id = new MessageDialogue(frame, database, name, "Pay a Spy", 4);
     		
     	}});
-    	cs.gridx = 0;
-    	cs.gridy = 0;
+    	cs.gridx = x;
+    	cs.gridy = y;
     	panel.add(paySpyBtn, cs); 
     	frame.setVisible(true);
     }
