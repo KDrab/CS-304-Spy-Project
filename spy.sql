@@ -125,6 +125,7 @@ values('worst team');
 
 insert into team
 values('other team');
+-----------------------------------------------------
 
 insert into player
 values('player1@gmail.com', 'player1', 'password1');
@@ -134,6 +135,7 @@ values('player2@gmail.com', 'player2', 'password2');
 
 insert into player
 values('player3@gmail.com', 'player3', 'password3');
+-----------------------------------------------------
 
 insert into character
 values(11, 'Character 1a', 10, 100, 'player1@gmail.com', 'best team');
@@ -152,8 +154,20 @@ values(23, 'Character 2c', 3, 50, 'player2@gmail.com', 'best team');
 
 insert into character
 values(31, 'Character 3a', 1, 20, 'player3@gmail.com', 'other team');
+-----------------------------------------------------
 
+insert into spy
+values(21, 'Character 2a', 21, 'player3@gmail.com');
 
+insert into politician
+values(22, 'Character 2b', 8, 'player3@gmail.com');
+
+insert into businessman
+values(23, 'Character 2c', 43, 'player3@gmail.com');
+-----------------------------------------------------
+
+insert into government
+values('the gov', 'the prez', 2, 10);
 
 
 

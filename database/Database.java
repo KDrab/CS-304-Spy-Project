@@ -227,7 +227,30 @@ public class Database {
         }
 	}
 	
-	
+	public int checkPlayerType(int id){
+        // return list of all team names
+        try {        
+            Statement stmt = con.createStatement();
+            ResultSet spyRS = stmt.executeQuery("SELECT c.id FROM character c, spy s WHERE c.id = s.id");
+            ResultSet poliRS = stmt.executeQuery("SELECT c.id FROM character c, spy s WHERE c.id = s.id");
+            ResultSet bizRS = stmt.executeQuery("SELECT c.id FROM character c, spy s WHERE c.id = s.id");
+        
+            if (spyRS.next()) {
+            	return 1;
+            } else if (poliRS.next()) {
+            	return 2;
+            } else if (bizRS.next()) {
+            	return 3;
+            }
+            
+            return 0;
+            
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return 0;
+        }
+	}
 	
 	public void connectToDatabase(String username, String password){
 		try {
