@@ -1,0 +1,23 @@
+1. Selection and projection query - DONE
+every time data is displayed
+
+2. Join query - DONE
+checking character type when a character is selected
+
+3. Division query - TODO
+IDEA: check if a player has done all the actions, this is an accomplishment in the game
+
+4. Aggregation query - DONE
+Admin page shows aggregate data of each team
+
+5. Nested aggregation with group-by - IN PROG
+LeaderBoard does this but according to the demo page the user needs to choose to get the min or max, not both immediately. Solution is to create two buttons that display popups, one displays the team in first, or the team in last (by average level of members).
+
+6. Delete operation - TODO
+Allow player to delete character
+
+7. Update operation - DONE
+Signup button does this, as one example.
+
+8. Graphical user interface - IN PROG/DONE
+Obviously there’s a GUI…
