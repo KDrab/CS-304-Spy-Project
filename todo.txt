@@ -10,14 +10,16 @@ IDEA: check if a player has done all the actions, this is an accomplishment in t
 4. Aggregation query - DONE
 Admin page shows aggregate data of each team
 
-5. Nested aggregation with group-by - IN PROG
-LeaderBoard does this but according to the demo page the user needs to choose to get the min or max, not both immediately. Solution is to create two buttons that display popups, one displays the team in first, or the team in last (by average level of members).
+5. Nested aggregation with group-by - DONE
+Winning/Losing Team buttons do this, user selects whether they want the team with max average level (1st place) or the min average level (last place)
 
 6. Delete operation - TODO
-Allow player to delete character
+Allow player to delete character?
+Allow player to delete their account?
+Allow admin to delete player?
 
 7. Update operation - DONE
-Signup button does this, as one example.
+Sign up button does this, as one example.
 
 8. Graphical user interface - IN PROG/DONE
 Obviously there’s a GUI…

@@ -54,7 +54,8 @@ public class Homepage extends JFrame {
     			if (ld.getIsAdmin()){
     				panel.removeAll();
         			displayLogoutButton();
-        			displayLeaderBoard();
+        			displayWinnerButton();
+        			displayLoserButton();
         			displayTeamList();
         			frame.repaint();
         			isAdmin = true;
@@ -62,7 +63,8 @@ public class Homepage extends JFrame {
     			}
     			panel.removeAll();
     			displayLogoutButton();
-    			displayLeaderBoard();
+    			displayWinnerButton();
+    			displayLoserButton();
     			displayCharList(ld.getUsername(), 0 , 5);
     			frame.repaint();
     		}
@@ -100,6 +102,30 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
+    public void displayWinnerButton(){
+    	JButton winnerButton = new JButton("Winning Team");
+    	cs.gridx = 0;
+    	cs.gridy = 1;
+    	panel.add(winnerButton, cs);
+    	winnerButton.addActionListener(new ActionListener(){
+    	public void actionPerformed(ActionEvent e) {
+    		JOptionPane.showMessageDialog(Homepage.this, database.getLeaderBoard(0), "Winning Team", JOptionPane.INFORMATION_MESSAGE);
+    	}});
+    	frame.setVisible(true);
+    }
+    
+    public void displayLoserButton(){
+    	JButton loserButton = new JButton("Losing Team");
+    	cs.gridx = 0;
+    	cs.gridy = 2;
+    	panel.add(loserButton, cs);
+    	loserButton.addActionListener(new ActionListener(){
+    	public void actionPerformed(ActionEvent e) {
+    		JOptionPane.showMessageDialog(frame, database.getLeaderBoard(1), "Losing Team", JOptionPane.INFORMATION_MESSAGE);
+    	}});
+    	frame.setVisible(true);
+    }
+    
     public void displayTeamList() {
     	ArrayList<String> teams = database.getTeams();
     	TableView teamListModel = new TableView(new String[]{"Teams"}, 0);
@@ -129,7 +155,8 @@ public class Homepage extends JFrame {
     			
     			panel.removeAll();
     			displayLogoutButton();
-    			displayLeaderBoard();
+    			displayWinnerButton();
+    			displayLoserButton();
     			cs.gridx = 0;
     	    	cs.gridy = 10;
     			panel.add(pane, cs);
@@ -169,30 +196,30 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
-    public void displayLeaderBoard() {
-    	ArrayList<String> leaders = database.getLeaderBoard();
-    	TableView leaderListModel = new TableView(new String[]{"Last PLace Team", "First Place Team"}, 0);
-    	JTable leaderList = new JTable(leaderListModel);
-    	
-    	System.out.println("In displayLeaderBoard, querying done.");
-    	
-    	for (int i = leaders.size() - 1; i > 0; i = i - 2) {
-    		System.out.println("In for...");
-    		String[] toAdd = new String[4];
-    		toAdd[0] = leaders.get(i);
-    		toAdd[1] = leaders.get(i-1);
-    		System.out.println("toAdd[] full.");
-    		leaderListModel.addRow(toAdd);
-    	}
-    	
-    	cs.gridx = 0;
-    	cs.gridy = 1;
-    	JScrollPane pane = new JScrollPane(leaderList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
-    													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    	pane.setPreferredSize(new Dimension(appWidth/2, 52));
-    	panel.add(pane, cs);
-    	frame.setVisible(true);
-    }
+//    public void displayLeaderBoard() {
+//    	ArrayList<String> leaders = database.getLeaderBoard();
+//    	TableView leaderListModel = new TableView(new String[]{"Last PLace Team", "First Place Team"}, 0);
+//    	JTable leaderList = new JTable(leaderListModel);
+//    	
+//    	System.out.println("In displayLeaderBoard, querying done.");
+//    	
+//    	for (int i = leaders.size() - 1; i > 0; i = i - 2) {
+//    		System.out.println("In for...");
+//    		String[] toAdd = new String[4];
+//    		toAdd[0] = leaders.get(i);
+//    		toAdd[1] = leaders.get(i-1);
+//    		System.out.println("toAdd[] full.");
+//    		leaderListModel.addRow(toAdd);
+//    	}
+//    	
+//    	cs.gridx = 0;
+//    	cs.gridy = 1;
+//    	JScrollPane pane = new JScrollPane(leaderList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+//    													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//    	pane.setPreferredSize(new Dimension(appWidth/2, 52));
+//    	panel.add(pane, cs);
+//    	frame.setVisible(true);
+//    }
     
     public void displayPlayerList() {
     	ArrayList<String> players = database.getPlayerList();
@@ -262,7 +289,8 @@ public class Homepage extends JFrame {
     			
     			panel.removeAll();
     			displayLogoutButton();
-    			displayLeaderBoard();
+    			displayWinnerButton();
+    			displayLoserButton();
     			if (isAdmin) {
     				displayPlayerList();
     			}

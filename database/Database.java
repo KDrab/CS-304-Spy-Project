@@ -306,48 +306,45 @@ public class Database {
         }
 	}
 	
-	public ArrayList<String> getLeaderBoard() {
+	public ArrayList<String> getLeaderBoard(int i) {
 		try {
             ArrayList<String> leaders = new ArrayList<String>();
             
         
             System.out.println("Creating queries...");
             
-            String maxQuery = "SELECT max(avglvl) as lvl FROM (SELECT teamName, avg(lvl) as avglvl FROM character GROUP BY teamName)";
-            String minQuery = "SELECT min(avglvl) as lvl FROM (SELECT teamName, avg(lvl) as avglvl FROM character GROUP BY teamName)";
+            String minMax;
             
-            Statement stmt1 = con.createStatement();
-            ResultSet max = stmt1.executeQuery(maxQuery);
-            Statement stmt2 = con.createStatement();
-            ResultSet min = stmt2.executeQuery(minQuery);
+            if (i == 0) {
+            	minMax = "SELECT max(avglvl) as lvl FROM (SELECT teamName, avg(lvl) as avglvl FROM character GROUP BY teamName)";
+            } else if (i == 1) {
+            	minMax = "SELECT min(avglvl) as lvl FROM (SELECT teamName, avg(lvl) as avglvl FROM character GROUP BY teamName)";
+            } else {
+            	System.out.println("Invalid LeaderBoard query!");
+            	minMax = "";
+            	return null;
+            }
+            
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(minMax);
             
     		System.out.println("Query round 1 done.");
-            while (max.next() && min.next()) {
-//            	leaders.add(max.getString("teamName"));
-//                leaders.add(min.getString("teamName"));
-                leaders.add(max.getString("lvl"));
-                leaders.add(min.getString("lvl"));
+            while (rs.next()) {
+                leaders.add(rs.getString("lvl"));
             }
             
             System.out.println("leaders[] half full.");
             
-            String maxlvl = leaders.get(0);
-            String minlvl = leaders.get(1);
+            String lvl = leaders.get(0);
             
-            String query1 = "SELECT teamName, avg(lvl) as avglvl FROM character GROUP BY teamName HAVING avg(lvl) = " + maxlvl;
-            String query2 = "SELECT teamName, avg(lvl) as avglvl FROM character GROUP BY teamName HAVING avg(lvl) = " + minlvl;
+            String query = "SELECT teamName, avg(lvl) as avglvl FROM character GROUP BY teamName HAVING avg(lvl) = " + lvl;
             
-            Statement stmt3 = con.createStatement();
-            ResultSet max2 = stmt3.executeQuery(query1);
-            Statement stmt4 = con.createStatement();
-            ResultSet min2 = stmt4.executeQuery(query2);
+            Statement stmt2 = con.createStatement();
+            ResultSet rs2 = stmt2.executeQuery(query);
             
     		System.out.println("Query round 2 done.");
-            while (max2.next() && min2.next()) {
-            	leaders.add(max2.getString("teamName"));
-                leaders.add(min2.getString("teamName"));
-//                leaders.add(max2.getString("avglvl"));
-//                leaders.add(min2.getString("avglvl"));
+            while (rs2.next()) {
+            	leaders.add(rs2.getString("teamName"));
             }
             
             System.out.println("leaders[] full.");
