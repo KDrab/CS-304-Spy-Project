@@ -55,7 +55,6 @@ public class Homepage extends JFrame {
     				panel.removeAll();
         			displayLogoutButton();
         			displayTeamList();
-        			displayMessageButton(1, 0);
         			frame.repaint();
         			isAdmin = true;
         			return;
@@ -167,6 +166,33 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
+    public void displayLeaderboard() {
+    	ArrayList<String> stats = database.getLeaderboard();
+    	TableView statListModel = new TableView(new String[]{"Name", "Size", "Avg. Level", "Total Cash"}, 0);
+    	JTable statList = new JTable(statListModel);
+    	
+    	System.out.println("In displayTeamStats, querying done.");
+    	
+    	for (int i = 0; i < stats.size(); i = i + 4) {
+    		System.out.println("In for...");
+    		String[] toAdd = new String[4];
+    		toAdd[0] = stats.get(i);
+    		toAdd[1] = stats.get(i+1);
+    		toAdd[2] = stats.get(i+2);
+    		toAdd[3] = stats.get(i+3);
+    		System.out.println("toAdd[] full.");
+    		statListModel.addRow(toAdd);
+    	}
+    	
+    	cs.gridx = 0;
+    	cs.gridy = 1;
+    	JScrollPane pane = new JScrollPane(statList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+    													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    	pane.setPreferredSize(new Dimension(appWidth/2, 36));
+    	panel.add(pane, cs);
+    	frame.setVisible(true);
+    }
+    
     public void displayPlayerList() {
     	ArrayList<String> players = database.getPlayerList();
     	playerListModel = new TableView(new String[]{"Players"}, 0);
@@ -231,6 +257,7 @@ public class Homepage extends JFrame {
     			
     			// check type of player here
     			int type = database.checkPlayerType(selected);
+    			System.out.println("Player type: " + type);
     			
     			panel.removeAll();
     			displayLogoutButton();

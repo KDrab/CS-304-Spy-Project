@@ -284,9 +284,11 @@ public class Database {
         try {        
             Statement stmt = con.createStatement();
             ResultSet spyRS = stmt.executeQuery("SELECT c.id FROM character c, spy s WHERE c.id = s.id");
-            ResultSet poliRS = stmt.executeQuery("SELECT c.id FROM character c, spy s WHERE c.id = s.id");
-            ResultSet bizRS = stmt.executeQuery("SELECT c.id FROM character c, spy s WHERE c.id = s.id");
-        
+            ResultSet poliRS = stmt.executeQuery("SELECT c.id FROM character c, politician p WHERE c.id = p.id");
+            ResultSet bizRS = stmt.executeQuery("SELECT c.id FROM character c, businessman b WHERE c.id = b.id");
+            
+            System.out.println("Spy? " + spyRS.next() + "; Poli? " + poliRS.next() + "; Biz? " + bizRS.next());
+            
             if (spyRS.next()) {
             	return 1;
             } else if (poliRS.next()) {
@@ -301,6 +303,26 @@ public class Database {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());
             return 0;
+        }
+	}
+	
+	public ArrayList<String> getLeaderboard() {
+		try {
+            ArrayList<String> leaders = new ArrayList<String>();
+        
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT name FROM team");
+        
+            while (rs.next()) {
+                leaders.add(rs.getString("name"));
+            }
+            
+            return leaders;
+            
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return null;
         }
 	}
 	
@@ -338,6 +360,4 @@ public class Database {
 			System.out.println("Failed to make connection!");
 		}
 	}
-
-
 }
