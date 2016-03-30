@@ -45,15 +45,24 @@ public class AssassinationDialog extends JDialog {
 	       panel = new JPanel(new GridBagLayout());
 	       cs = new GridBagConstraints();
 	       frame.add(panel);
+	       
+	       System.out.println("AD frame created");
 	        
-	       this.displayEnemyList(charID, 0, 1);	   
+	       displayEnemyList(charID, 0, 1);
+	       
+	       System.out.println("AD enemies added");
 	}
 	
 	public void displayEnemyList(int charID, int x, int y) {
+		System.out.println("In displayEnemyList, pre-query");
+		
     	ArrayList<String> enemies = database.getEnemiesList(charID);
+    	
     	TableView enemyListModel = new TableView(new String[]{"ID", "Name", "Level"}, 0);
     	
     	JTable enemyList = new JTable(enemyListModel);
+    	
+    	System.out.println("displayEnemyList query done, table created");
     	
     	for (int i = 0; i < enemies.size(); i = i + 3) {
     		String[] toAdd = new String[3];

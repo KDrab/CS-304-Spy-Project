@@ -433,6 +433,7 @@ public class Homepage extends JFrame {
     	fundPoliBtn.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
+    		System.out.println("Donate clicked!");
     		AssassinationDialog id = new AssassinationDialog(frame, database, charID);
     		
     	}});

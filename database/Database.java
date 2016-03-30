@@ -388,6 +388,8 @@ public class Database {
 
 	public ArrayList<String> getEnemiesList(int charID) {
 		try {
+			System.out.println("In getEnemiesList query top...");
+			
             ArrayList<String> enemies = new ArrayList<String>();
             
             System.out.println("getting enemies list");
