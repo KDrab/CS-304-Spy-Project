@@ -309,19 +309,48 @@ public class Database {
 	public ArrayList<String> getLeaderBoard() {
 		try {
             ArrayList<String> leaders = new ArrayList<String>();
+            
         
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT teamName, max(lvl) as maxlvl FROM character GROUP BY teamName");
+            System.out.println("Creating queries...");
             
-    		System.out.println("RS done.");
+            String maxQuery = "SELECT max(avglvl) as lvl FROM (SELECT teamName, avg(lvl) as avglvl FROM character GROUP BY teamName)";
+            String minQuery = "SELECT min(avglvl) as lvl FROM (SELECT teamName, avg(lvl) as avglvl FROM character GROUP BY teamName)";
             
-            while (rs.next()) {
-                leaders.add(rs.getString("teamName"));
-                leaders.add(rs.getString("maxlvl"));
+            Statement stmt1 = con.createStatement();
+            ResultSet max = stmt1.executeQuery(maxQuery);
+            Statement stmt2 = con.createStatement();
+            ResultSet min = stmt2.executeQuery(minQuery);
+            
+    		System.out.println("Query round 1 done.");
+            while (max.next() && min.next()) {
+//            	leaders.add(max.getString("teamName"));
+//                leaders.add(min.getString("teamName"));
+                leaders.add(max.getString("lvl"));
+                leaders.add(min.getString("lvl"));
             }
             
-            System.out.println("While done.");
+            System.out.println("leaders[] half full.");
             
+            String maxlvl = leaders.get(0);
+            String minlvl = leaders.get(1);
+            
+            String query1 = "SELECT teamName, avg(lvl) as avglvl FROM character GROUP BY teamName HAVING avg(lvl) = " + maxlvl;
+            String query2 = "SELECT teamName, avg(lvl) as avglvl FROM character GROUP BY teamName HAVING avg(lvl) = " + minlvl;
+            
+            Statement stmt3 = con.createStatement();
+            ResultSet max2 = stmt3.executeQuery(query1);
+            Statement stmt4 = con.createStatement();
+            ResultSet min2 = stmt4.executeQuery(query2);
+            
+    		System.out.println("Query round 2 done.");
+            while (max2.next() && min2.next()) {
+            	leaders.add(max2.getString("teamName"));
+                leaders.add(min2.getString("teamName"));
+//                leaders.add(max2.getString("avglvl"));
+//                leaders.add(min2.getString("avglvl"));
+            }
+            
+            System.out.println("leaders[] full.");
             return leaders;
             
         } catch (Exception e) {

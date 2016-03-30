@@ -171,17 +171,16 @@ public class Homepage extends JFrame {
     
     public void displayLeaderBoard() {
     	ArrayList<String> leaders = database.getLeaderBoard();
-    	TableView leaderListModel = new TableView(new String[]{"Team", "Level"}, 0);
+    	TableView leaderListModel = new TableView(new String[]{"Last PLace Team", "First Place Team"}, 0);
     	JTable leaderList = new JTable(leaderListModel);
     	
     	System.out.println("In displayLeaderBoard, querying done.");
     	
-    	for (int i = 0; i < leaders.size(); i = i + 2) {
+    	for (int i = leaders.size() - 1; i > 0; i = i - 2) {
     		System.out.println("In for...");
-    		String[] toAdd = new String[2];
+    		String[] toAdd = new String[4];
     		toAdd[0] = leaders.get(i);
-    		toAdd[1] = leaders.get(i+1);
-//    		toAdd[2] = leaders.get(i+2);
+    		toAdd[1] = leaders.get(i-1);
     		System.out.println("toAdd[] full.");
     		leaderListModel.addRow(toAdd);
     	}
@@ -190,7 +189,7 @@ public class Homepage extends JFrame {
     	cs.gridy = 1;
     	JScrollPane pane = new JScrollPane(leaderList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
     													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    	pane.setPreferredSize(new Dimension(appWidth/2, 68));
+    	pane.setPreferredSize(new Dimension(appWidth/2, 52));
     	panel.add(pane, cs);
     	frame.setVisible(true);
     }
