@@ -303,7 +303,7 @@ public class Homepage extends JFrame {
     			if (type == 1) {
     				// character is a spy
     				panel.setBackground(Color.red);
-    				displayAssassinationButton(0, 12);
+    				displayAssassinationButton(0, 12, selected);
     				displayInterceptButton(0, 13);
     			} else if (type == 2) {
     				// character is a politician
@@ -313,8 +313,8 @@ public class Homepage extends JFrame {
     			} else if (type == 3) {
     				// character is a businessman
     				panel.setBackground(Color.blue);
-    				displayFundPoliticianButton(0, 12);
-    				displayPaySpyButton(0, 13);
+    				displayFundPoliticianButton(0, 12, selected);
+    				displayPaySpyButton(0, 13, selected);
     			}
     			
     			frame.repaint();
@@ -347,7 +347,7 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
-    public void displayAssassinationButton(int x, int y){
+    public void displayAssassinationButton(int x, int y, int charID){
     	JButton assassinateButton = new JButton("Assassinatae");
     	assassinateButton.setLocation(200,150);
     	assassinateButton.addActionListener(new ActionListener(){
@@ -355,7 +355,7 @@ public class Homepage extends JFrame {
     		panel.removeAll();
     		String name = "";
     		
-    		AssassinationDialog ad = new AssassinationDialog(frame, database, name);
+    		AssassinationDialog ad = new AssassinationDialog(frame, database, charID);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
@@ -428,14 +428,12 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
-    public void displayFundPoliticianButton(int x, int y) {
+    public void displayFundPoliticianButton(int x, int y, int charID) {
     	JButton fundPoliBtn = new JButton("Donate...");
-    	fundPoliBtn.setLocation(200,150);
     	fundPoliBtn.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
-    		String name = "";
-//    		MessageDialogue id = new MessageDialogue(frame, database, name, "Fund a Politician", 3);
+    		AssassinationDialog id = new AssassinationDialog(frame, database, charID);
     		
     	}});
     	cs.gridx = x;
@@ -444,14 +442,12 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
 
-    public void displayPaySpyButton(int x, int y) {
+    public void displayPaySpyButton(int x, int y, int charID) {
     	JButton paySpyBtn = new JButton("Pay a Spy");
-    	paySpyBtn.setLocation(200,150);
     	paySpyBtn.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
-    		String name = "";
-//    		MessageDialogue id = new MessageDialogue(frame, database, name, "Pay a Spy", 4);
+    		AssassinationDialog id = new AssassinationDialog(frame, database, charID);
     		
     	}});
     	cs.gridx = x;

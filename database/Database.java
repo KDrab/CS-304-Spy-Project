@@ -293,12 +293,9 @@ public class Database {
             	return 1;
             } else if (poliRS.next()) {
             	return 2;
-            } else if (bizRS.next()) {
+            } else {
             	return 3;
             }
-            
-            return 0;
-            
         } catch (Exception e) {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());
@@ -390,5 +387,33 @@ public class Database {
 		} else {
 			System.out.println("Failed to make connection!");
 		}
+	}
+
+	public ArrayList<String> getEnemiesList(int charID) {
+		try {
+            ArrayList<String> enemies = new ArrayList<String>();
+            
+            System.out.println("getting enemies list");
+        
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT id, name, lvl FROM character WHERE id <> " + charID);
+            
+            System.out.println("getting enemies list - query done");
+        
+            while (rs.next()) {
+            	enemies.add(rs.getString("id"));
+            	enemies.add(rs.getString("name"));
+            	enemies.add(rs.getString("lvl"));
+            }
+            
+            System.out.println("getting enemies list - returning enemies");
+            
+            return enemies;
+            
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return null;
+        }
 	}
 }

@@ -14,9 +14,7 @@ Admin page shows aggregate data of each team
 Winning/Losing Team buttons do this, user selects whether they want the team with max average level (1st place) or the min average level (last place)
 
 6. Delete operation - TODO
-Allow player to delete character?
-Allow player to delete their account?
-Allow admin to delete player?
+Assassination action
 
 7. Update operation - DONE
 Sign up button does this, as one example.
