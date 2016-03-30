@@ -109,7 +109,7 @@ public class Homepage extends JFrame {
     	panel.add(winnerButton, cs);
     	winnerButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
-    		JOptionPane.showMessageDialog(Homepage.this, database.getLeaderBoard(0), "Winning Team", JOptionPane.INFORMATION_MESSAGE);
+    		JOptionPane.showMessageDialog(frame, "Winning Team: \nAverage Level & Team Name: \n" + database.getLeaderBoard(0), "Winning Team", JOptionPane.INFORMATION_MESSAGE);
     	}});
     	frame.setVisible(true);
     }
@@ -121,7 +121,7 @@ public class Homepage extends JFrame {
     	panel.add(loserButton, cs);
     	loserButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
-    		JOptionPane.showMessageDialog(frame, database.getLeaderBoard(1), "Losing Team", JOptionPane.INFORMATION_MESSAGE);
+    		JOptionPane.showMessageDialog(frame, "Losing Team: \nAverage Level & Team Name: \n" + database.getLeaderBoard(1), "Losing Team", JOptionPane.INFORMATION_MESSAGE);
     	}});
     	frame.setVisible(true);
     }
