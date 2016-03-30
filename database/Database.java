@@ -306,16 +306,21 @@ public class Database {
         }
 	}
 	
-	public ArrayList<String> getLeaderboard() {
+	public ArrayList<String> getLeaderBoard() {
 		try {
             ArrayList<String> leaders = new ArrayList<String>();
         
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT name FROM team");
-        
+            ResultSet rs = stmt.executeQuery("SELECT teamName, max(lvl) as maxlvl FROM character GROUP BY teamName");
+            
+    		System.out.println("RS done.");
+            
             while (rs.next()) {
-                leaders.add(rs.getString("name"));
+                leaders.add(rs.getString("teamName"));
+                leaders.add(rs.getString("maxlvl"));
             }
+            
+            System.out.println("While done.");
             
             return leaders;
             

@@ -54,6 +54,7 @@ public class Homepage extends JFrame {
     			if (ld.getIsAdmin()){
     				panel.removeAll();
         			displayLogoutButton();
+        			displayLeaderBoard();
         			displayTeamList();
         			frame.repaint();
         			isAdmin = true;
@@ -61,7 +62,8 @@ public class Homepage extends JFrame {
     			}
     			panel.removeAll();
     			displayLogoutButton();
-    			displayCharList(ld.getUsername(), 0 , 1);
+    			displayLeaderBoard();
+    			displayCharList(ld.getUsername(), 0 , 5);
     			frame.repaint();
     		}
     	}});
@@ -109,7 +111,7 @@ public class Homepage extends JFrame {
         System.out.println("Top displayTeamList");
     	
     	cs.gridx = 0;
-    	cs.gridy = 1;
+    	cs.gridy = 5;
     	JScrollPane pane = new JScrollPane(teamList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
     													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     	pane.setPreferredSize(new Dimension(appWidth/3, Math.min(20 + teams.size() * 16, 132)));
@@ -127,8 +129,9 @@ public class Homepage extends JFrame {
     			
     			panel.removeAll();
     			displayLogoutButton();
+    			displayLeaderBoard();
     			cs.gridx = 0;
-    	    	cs.gridy = 1;
+    	    	cs.gridy = 10;
     			panel.add(pane, cs);
     			displayTeamStats(selected, 0, 11);
     			frame.repaint();
@@ -166,29 +169,28 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
-    public void displayLeaderboard() {
-    	ArrayList<String> stats = database.getLeaderboard();
-    	TableView statListModel = new TableView(new String[]{"Name", "Size", "Avg. Level", "Total Cash"}, 0);
-    	JTable statList = new JTable(statListModel);
+    public void displayLeaderBoard() {
+    	ArrayList<String> leaders = database.getLeaderBoard();
+    	TableView leaderListModel = new TableView(new String[]{"Team", "Level"}, 0);
+    	JTable leaderList = new JTable(leaderListModel);
     	
-    	System.out.println("In displayTeamStats, querying done.");
+    	System.out.println("In displayLeaderBoard, querying done.");
     	
-    	for (int i = 0; i < stats.size(); i = i + 4) {
+    	for (int i = 0; i < leaders.size(); i = i + 2) {
     		System.out.println("In for...");
-    		String[] toAdd = new String[4];
-    		toAdd[0] = stats.get(i);
-    		toAdd[1] = stats.get(i+1);
-    		toAdd[2] = stats.get(i+2);
-    		toAdd[3] = stats.get(i+3);
+    		String[] toAdd = new String[2];
+    		toAdd[0] = leaders.get(i);
+    		toAdd[1] = leaders.get(i+1);
+//    		toAdd[2] = leaders.get(i+2);
     		System.out.println("toAdd[] full.");
-    		statListModel.addRow(toAdd);
+    		leaderListModel.addRow(toAdd);
     	}
     	
     	cs.gridx = 0;
     	cs.gridy = 1;
-    	JScrollPane pane = new JScrollPane(statList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+    	JScrollPane pane = new JScrollPane(leaderList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
     													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    	pane.setPreferredSize(new Dimension(appWidth/2, 36));
+    	pane.setPreferredSize(new Dimension(appWidth/2, 68));
     	panel.add(pane, cs);
     	frame.setVisible(true);
     }
@@ -261,6 +263,7 @@ public class Homepage extends JFrame {
     			
     			panel.removeAll();
     			displayLogoutButton();
+    			displayLeaderBoard();
     			if (isAdmin) {
     				displayPlayerList();
     			}
