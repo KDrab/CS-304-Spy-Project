@@ -5,11 +5,14 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -74,11 +77,26 @@ public class AssassinationDialog extends JDialog {
     			int col = 0;
     			// selected = charID to assassinate
     			int selected = Integer.parseInt(enemyList.getModel().getValueAt(row, col).toString().trim());
-    			
+    			displayKillButton(selected, 0, 10);
     			frame.repaint();
     		}
     	};
     	
     	enemyList.addMouseListener(tableMouseListener);
+    }
+	
+	public void displayKillButton(int victim, int x, int y){
+    	JButton killButton = new JButton("Kill");
+    	killButton.setLocation(200,150);
+    	killButton.addActionListener(new ActionListener(){
+    	public void actionPerformed(ActionEvent e) {
+    		panel.removeAll();
+    		database.deleteCharacter(victim);
+    	}});
+    	cs.gridx = x;
+    	cs.gridy = y;
+    	panel.add(killButton, cs); 
+    	frame.setVisible(true);
+    	
     }
 }

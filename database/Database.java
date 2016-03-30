@@ -1,7 +1,4 @@
 package database;
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -415,5 +412,19 @@ public class Database {
             System.err.println(e.getMessage());
             return null;
         }
+	}
+
+	public void deleteCharacter(int victim) {
+		// delete character when they are killed
+		try {
+			Statement stmt = con.createStatement();
+			String queryString = "DELETE FROM character WHERE id = " + victim;
+			ResultSet rs = stmt.executeQuery(queryString);
+		} catch (Exception e) {
+            System.err.println("Got a deleteCharacter exception!");
+            System.err.println(e.getMessage());
+            return;
+        }
+        
 	}
 }
