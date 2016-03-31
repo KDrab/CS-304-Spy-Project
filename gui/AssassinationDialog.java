@@ -48,7 +48,7 @@ public class AssassinationDialog extends JDialog {
 	       
 	       System.out.println("AD frame created");
 	        
-	       displayEnemyList(charID, 0, 1);
+	       this.displayEnemyList(charID, 0, 1);
 	       
 	       System.out.println("AD enemies added");
 	}

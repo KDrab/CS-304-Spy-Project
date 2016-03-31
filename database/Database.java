@@ -279,20 +279,27 @@ public class Database {
 	public int checkPlayerType(int id){
         // return list of all team names
         try {        
-            Statement stmt = con.createStatement();
-            ResultSet spyRS = stmt.executeQuery("SELECT c.id FROM character c, spy s WHERE c.id = s.id");
-            ResultSet poliRS = stmt.executeQuery("SELECT c.id FROM character c, politician p WHERE c.id = p.id");
-            ResultSet bizRS = stmt.executeQuery("SELECT c.id FROM character c, businessman b WHERE c.id = b.id");
+            Statement stmt1 = con.createStatement();
+            Statement stmt2 = con.createStatement();
+            Statement stmt3 = con.createStatement();
+            ResultSet spyRS = stmt1.executeQuery("SELECT c.id FROM character c, spy s WHERE c.id = s.id AND c.id = " + id);
+            ResultSet poliRS = stmt2.executeQuery("SELECT c.id FROM character c, politician p WHERE c.id = p.id AND c.id = " + id);
+            ResultSet bizRS = stmt3.executeQuery("SELECT c.id FROM character c, businessman b WHERE c.id = b.id AND c.id = " + id);
             
             System.out.println("Spy? " + spyRS.next() + "; Poli? " + poliRS.next() + "; Biz? " + bizRS.next());
+            int t = 0;
             
-            if (spyRS.next()) {
-            	return 1;
-            } else if (poliRS.next()) {
-            	return 2;
+            // query works, gets the correct 'type' for each player but checking if the ResultSets are empty does not work
+            if (!spyRS.next()) {
+            	if (!poliRS.next()) {
+            		t = 3;
+            	} else {
+            		t = 2;
+            	}
             } else {
-            	return 3;
+            	t = 1;
             }
+            return t;
         } catch (Exception e) {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());

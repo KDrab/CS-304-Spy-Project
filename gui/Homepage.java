@@ -299,7 +299,7 @@ public class Homepage extends JFrame {
     			panel.add(pane, cs);
     			displayCharStats(selected, 0, 20);
     			
-    			// display the correct buttons depending on type of character (changes the color for now for testing)
+    			// display the correct buttons depending on type of character (changes the color also)
     			if (type == 1) {
     				// character is a spy
     				panel.setBackground(Color.red);
