@@ -154,13 +154,13 @@ public class Database {
         }
 	}
 	
-	public ArrayList<String> getCharacterStats(int id){
+	public ArrayList<String> getCharacterStats(int charID){
         //returns all the stats for a character given an id
         try {
             ArrayList<String> stats = new ArrayList<String>();
         
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM character WHERE id = " + id);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM character WHERE id = " + charID);
         
             while (rs.next()) {
                 stats.add(rs.getString("id"));
@@ -484,7 +484,44 @@ public class Database {
 	}
 	
 	public void transferMoney(int to, int from, int amt) {
-		// TODO transfer money between characters
+		try{
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select id, cash from character where id = '" + to
+																					+ "' or id = '" + from + "'");
+			
+			ArrayList<String> characterTo = new ArrayList<String>();
+			ArrayList<String> characterFrom = new ArrayList<String>();
+			
+			while (rs.next()){
+				if (rs.getString("id").equals(to)){
+				characterTo.add(rs.getString("id"));
+				characterTo.add(rs.getString("cash"));
+				}
+				else if (rs.getString("id").equals(from)){
+				characterFrom.add(rs.getString("id"));
+				characterFrom.add(rs.getString("cash"));
+				}
+			}
+		 if (Integer.getInteger(characterFrom.get(1)) >= amt){
+			 Statement transfer = con.createStatement();
+			 transfer.executeQuery("UPDATE character"
+			 						+ "SET cash = " + (Integer.getInteger(characterTo.get(1)) + amt)
+			 						+ " WHERE id = '" + characterTo.get(0) + "'");
+			 
+			 Statement debit = con.createStatement();
+			 debit.executeQuery("UPDATE character"
+			 					+ "SET cash = " + (Integer.getInteger(characterFrom.get(1)) - amt)
+			 					+ "WHERE id = '" + characterFrom.get(0) + "'");
+		 }
+		 else {
+			 throw new Exception();
+		 }
+			
+		}
+		catch (Exception e){
+			System.err.println("Unable to Process Transaction - Not Enough Cash");
+			
+		}
 		
 	}
 
@@ -503,7 +540,7 @@ public class Database {
 		
 	}
 
-	public void logAction(int charID, int type) {
+	public void logAction(int from, int type) {
 		// TODO update action table with entry value(charID, time, type)
 		
 	}
