@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -15,9 +16,13 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import database.Database;
 
@@ -32,27 +37,76 @@ public class PaySpyDialog extends JDialog {
 	public int appWidth = 520;
 	public int appHeight = 480;
 	public boolean isAdmin = false;
+	public JLabel amtLbl;
+	public JTextField amt;
 	
-	public PaySpyDialog(JFrame parent, Database database, int charID) {
+	public PaySpyDialog(JFrame parent, Database db, int charID) {
 		   super(parent, "Hire a Spy", true);
+		   
+		   database = db;
 		    
-	       frame = new JFrame("Pay a Spy");
-	       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	       frame.setSize(appWidth, appHeight);
-	       frame.setLayout(new FlowLayout());
-	       frame.setVisible(true);
-	       
-	       panel = new JPanel(new GridBagLayout());
-	       cs = new GridBagConstraints();
-	       frame.add(panel);
+		   JPanel panel = new JPanel(new GridBagLayout());
+	       GridBagConstraints cs = new GridBagConstraints();
 	        
-	       this.displaySpyList(charID, 0, 1);
+	       cs.fill = GridBagConstraints.HORIZONTAL;
+	       
+	       amtLbl = new JLabel("Amount: ");
+	       cs.gridx = 0;
+	       cs.gridy = 0;
+	       cs.gridwidth = 1;
+	       panel.add(amtLbl, cs);
+	        
+	       amt = new JTextField(20);
+	       cs.gridx = 1;
+	       cs.gridy = 0;
+	       cs.gridwidth = 2;
+	       panel.add(amt, cs);
+	       panel.setBorder(new LineBorder(Color.GRAY));
+	       
+	       JButton btnPay = new JButton("Pay");
+	       
+	       int cash = Integer.parseInt(database.getCharacterStats(charID).get(3).toString().trim());
+	        
+	       btnPay.addActionListener(new ActionListener() {
+	            
+	           public void actionPerformed(ActionEvent e) {
+	               if (getAmt() <= cash) {
+	                   JOptionPane.showMessageDialog(PaySpyDialog.this, "Payment successful!", "Done", JOptionPane.INFORMATION_MESSAGE);
+	                   dispose();
+	               } else {
+	            	   JOptionPane.showMessageDialog(PaySpyDialog.this, "Insufficient funds!", "Cancel", JOptionPane.ERROR_MESSAGE);
+	                   // reset amt field
+	                   amt.setText("");	                    
+	               }
+	           }
+	       });
+	       
+	       JButton btnCancel = new JButton("Cancel");
+	       btnCancel.addActionListener(new ActionListener() {
+	           public void actionPerformed(ActionEvent e) {
+	               dispose();
+	           }
+	       });
+	       
+	       displaySpyList(charID, 0, 4);
+	        
+	       JPanel bp = new JPanel();
+	       bp.add(btnCancel);
+	        
+	       getContentPane().add(panel, BorderLayout.CENTER);
+	       getContentPane().add(bp, BorderLayout.PAGE_END);
+	        
+	       pack();
+	       setResizable(false);
+	       setLocationRelativeTo(parent);
+	        
+//	       this.displaySpyList(charID, 0, 4);
 	}
 	
 	public void displaySpyList(int charID, int x, int y) {
 		System.out.println("In displaySpyList, pre-query");
 		
-    	ArrayList<String> spies = database.getSpyList();
+    	ArrayList<String> spies = database.getSpyList(); 
     	
     	TableView spyListModel = new TableView(new String[]{"ID", "Name", "Success %"}, 0);
     	
@@ -68,6 +122,8 @@ public class PaySpyDialog extends JDialog {
     		spyListModel.addRow(toAdd);
     	}
     	
+    	int amt = 0;
+    	
     	cs.gridx = x;
     	cs.gridy = y;
     	JScrollPane pane = new JScrollPane(spyList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
@@ -82,7 +138,7 @@ public class PaySpyDialog extends JDialog {
     			int col = 0;
     			// selected = charID to assassinate
     			int selected = Integer.parseInt(spyList.getModel().getValueAt(row, col).toString().trim());
-    			displayPaySpyButton(selected, charID, 0, 10);
+    			displayPaySpyButton(selected, charID, amt, 0, 10);
     			frame.repaint();
     		}
     	};
@@ -90,13 +146,13 @@ public class PaySpyDialog extends JDialog {
     	spyList.addMouseListener(tableMouseListener);
     }
 	
-	public void displayPaySpyButton(int to, int from, int x, int y){
+	public void displayPaySpyButton(int to, int from, int amt, int x, int y){
     	JButton hireButton = new JButton("Pay.");
     	hireButton.setLocation(200,150);
     	hireButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
-    		database.transferMoney(to, from);
+    		database.transferMoney(to, from, amt);
     		database.logAction(from, 0);
     	}});
     	cs.gridx = x;
@@ -104,5 +160,9 @@ public class PaySpyDialog extends JDialog {
     	panel.add(hireButton, cs); 
     	frame.setVisible(true);
     	
+    }
+	
+	public int getAmt() {
+        return Integer.parseInt(amt.getText().trim());
     }
 }

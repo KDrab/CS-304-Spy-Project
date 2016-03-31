@@ -438,18 +438,54 @@ public class Database {
 	}
 
 	public ArrayList<String> getPoliList() {
-		// TODO get list of all politicians
-		return null;
-	}
-
-	public void transferMoney(int to, int from) {
-		// TODO transfer money between characters
-		
+		// get list of all politicians
+		try {
+            ArrayList<String> politicians = new ArrayList<String>();
+        
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM politician");
+        
+            while (rs.next()) {
+            	politicians.add(rs.getString("id"));
+            	politicians.add(rs.getString("name"));
+            	politicians.add(rs.getString("popularity"));
+            }
+            
+            return politicians;
+            
+        } catch (Exception e) {
+            System.err.println("Got getPoliList() exception! ");
+            System.err.println(e.getMessage());
+            return null;
+        }
 	}
 
 	public ArrayList<String> getSpyList() {
-		// TODO get list of all spies
-		return null;
+		// get list of all spies
+		try {
+            ArrayList<String> spies = new ArrayList<String>();
+        
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM spy");
+        
+            while (rs.next()) {
+            	spies.add(rs.getString("id"));
+            	spies.add(rs.getString("name"));
+            	spies.add(rs.getString("success"));
+            }
+            System.out.println(spies);
+            return spies;
+            
+        } catch (Exception e) {
+            System.err.println("Got getSpyList() exception! ");
+            System.err.println(e.getMessage());
+            return null;
+        }
+	}
+	
+	public void transferMoney(int to, int from, int amt) {
+		// TODO transfer money between characters
+		
 	}
 
 	public void createCampaign(int charID, int type) {

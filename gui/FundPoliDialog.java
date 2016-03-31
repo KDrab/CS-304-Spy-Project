@@ -68,6 +68,8 @@ public class FundPoliDialog extends JDialog {
     		poliListModel.addRow(toAdd);
     	}
     	
+    	int amt = 0;
+    	
     	cs.gridx = x;
     	cs.gridy = y;
     	JScrollPane pane = new JScrollPane(poliList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
@@ -82,7 +84,7 @@ public class FundPoliDialog extends JDialog {
     			int col = 0;
     			// selected = charID to assassinate
     			int selected = Integer.parseInt(poliList.getModel().getValueAt(row, col).toString().trim());
-    			displayFundButton(selected, charID, 0, 10);
+    			displayFundButton(selected, charID, amt, 0, 10);
     			frame.repaint();
     		}
     	};
@@ -90,13 +92,13 @@ public class FundPoliDialog extends JDialog {
     	poliList.addMouseListener(tableMouseListener);
     }
 	
-	public void displayFundButton(int to, int from, int x, int y){
+	public void displayFundButton(int to, int from, int amt, int x, int y){
     	JButton fundButton = new JButton("Donate.");
     	fundButton.setLocation(200,150);
     	fundButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
-    		database.transferMoney(to, from);
+    		database.transferMoney(to, from, amt);
     		database.logAction(from, 4);
     	}});
     	cs.gridx = x;
