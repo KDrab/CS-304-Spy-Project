@@ -304,12 +304,12 @@ public class Homepage extends JFrame {
     				// character is a spy
     				panel.setBackground(Color.red);
     				displayAssassinationButton(0, 12, selected);
-    				displayInterceptButton(0, 13);
+    				displayInterceptButton(0, 13, selected);
     			} else if (type == 2) {
     				// character is a politician
     				panel.setBackground(Color.black);
-    				displaySpeechButton(0, 12);
-    				displayCampaignButton(0, 13);
+    				displaySpeechButton(0, 12, selected);
+    				displayCampaignButton(0, 13, selected);
     			} else if (type == 3) {
     				// character is a businessman
     				panel.setBackground(Color.blue);
@@ -364,15 +364,14 @@ public class Homepage extends JFrame {
     	
     }
     
-    public void displayInterceptButton(int x, int y){
+    public void displayInterceptButton(int x, int y, int charID){
     	JButton interceptButton = new JButton("Intercept");
     	interceptButton.setLocation(200,150);
     	interceptButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
-    		String name = "";
-    		InterceptDialog id = new InterceptDialog(frame, database, name);
-    		
+    		System.out.println("Intercept clicked!");
+    		InterceptDialog id = new InterceptDialog(frame, database, charID);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
@@ -380,31 +379,14 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
-    public void displayMessageButton(int x, int y) {
-    	JButton messageButton = new JButton("Send Message");
-    	messageButton.setLocation(200,150);
-    	messageButton.addActionListener(new ActionListener(){
-    	public void actionPerformed(ActionEvent e) {
-    		panel.removeAll();
-    		String name = "";
-    		MessageDialogue id = new MessageDialogue(frame, database, name, "Compose Message");
-    		
-    	}});
-    	cs.gridx = x;
-    	cs.gridy = y;
-    	panel.add(messageButton, cs); 
-    	frame.setVisible(true);
-    }
-    
-    public void displaySpeechButton(int x, int y) {
+    public void displaySpeechButton(int x, int y, int charID) {
     	JButton speechButton = new JButton("Give Speech");
     	speechButton.setLocation(200,150);
     	speechButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
-    		String name = "";
-//    		MessageDialogue id = new MessageDialogue(frame, database, name, "Give Speech");
-    		
+    		System.out.println("Speech clicked!");
+    		SpeechDialog id = new SpeechDialog(frame, database, charID);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
@@ -412,14 +394,14 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
-    public void displayCampaignButton(int x, int y) {
+    public void displayCampaignButton(int x, int y, int charID) {
     	JButton campaignButton = new JButton("Campaign...");
     	campaignButton.setLocation(200,150);
     	campaignButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
-    		String name = "";
-//    		MessageDialogue id = new MessageDialogue(frame, database, name, "Marketing Campaign", 2);
+    		System.out.println("Campaign clicked!");
+    		CampaignDialog id = new CampaignDialog(frame, database, charID);
     		
     	}});
     	cs.gridx = x;
@@ -434,8 +416,7 @@ public class Homepage extends JFrame {
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
     		System.out.println("Donate clicked!");
-    		AssassinationDialog id = new AssassinationDialog(frame, database, charID);
-    		
+    		FundPoliDialog id = new FundPoliDialog(frame, database, charID);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
@@ -448,8 +429,8 @@ public class Homepage extends JFrame {
     	paySpyBtn.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
-    		AssassinationDialog id = new AssassinationDialog(frame, database, charID);
-    		
+    		System.out.println("Pay Spy clicked!");
+    		PaySpyDialog id = new PaySpyDialog(frame, database, charID);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;

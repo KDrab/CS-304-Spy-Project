@@ -86,7 +86,7 @@ public class AssassinationDialog extends JDialog {
     			int col = 0;
     			// selected = charID to assassinate
     			int selected = Integer.parseInt(enemyList.getModel().getValueAt(row, col).toString().trim());
-    			displayKillButton(selected, 0, 10);
+    			displayKillButton(selected, 0, 10, charID);
     			frame.repaint();
     		}
     	};
@@ -94,13 +94,14 @@ public class AssassinationDialog extends JDialog {
     	enemyList.addMouseListener(tableMouseListener);
     }
 	
-	public void displayKillButton(int victim, int x, int y){
+	public void displayKillButton(int victim, int x, int y, int charID){
     	JButton killButton = new JButton("Kill");
     	killButton.setLocation(200,150);
     	killButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
     		database.deleteCharacter(victim);
+    		database.logAction(charID, 0);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;

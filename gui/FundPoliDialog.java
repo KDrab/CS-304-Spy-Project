@@ -21,7 +21,7 @@ import javax.swing.JTable;
 
 import database.Database;
 
-public class InterceptDialog extends JDialog {
+public class FundPoliDialog extends JDialog {
 	
 	public Database database; 
 	public JFrame frame;
@@ -33,10 +33,10 @@ public class InterceptDialog extends JDialog {
 	public int appHeight = 480;
 	public boolean isAdmin = false;
 	
-	public InterceptDialog(JFrame parent, Database database, int charID) {
-		   super(parent, "Spy", true);
+	public FundPoliDialog(JFrame parent, Database database, int charID) {
+		   super(parent, "Fund a Politician", true);
 		    
-	       frame = new JFrame("Choose your Target!");
+	       frame = new JFrame("Fund a Politician");
 	       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	       frame.setSize(appWidth, appHeight);
 	       frame.setLayout(new FlowLayout());
@@ -45,63 +45,63 @@ public class InterceptDialog extends JDialog {
 	       panel = new JPanel(new GridBagLayout());
 	       cs = new GridBagConstraints();
 	       frame.add(panel);
-	       	        
-	       this.displayTargetList(charID, 0, 1);
+	        
+	       this.displayPoliList(charID, 0, 1);
 	}
 	
-	public void displayTargetList(int charID, int x, int y) {
-		System.out.println("In displayTargetList, pre-query");
+	public void displayPoliList(int charID, int x, int y) {
+		System.out.println("In displayPoliList, pre-query");
 		
-    	ArrayList<String> targets = database.getEnemiesList(charID);
+    	ArrayList<String> polis = database.getPoliList();
     	
-    	TableView targetsListModel = new TableView(new String[]{"ID", "Name", "Level"}, 0);
+    	TableView poliListModel = new TableView(new String[]{"ID", "Name", "Popularity"}, 0);
     	
-    	JTable targetList = new JTable(targetsListModel);
+    	JTable poliList = new JTable(poliListModel);
     	
-    	System.out.println("displayEnemyList query done, table created");
+    	System.out.println("displayPoliList query done, table created");
     	
-    	for (int i = 0; i < targets.size(); i = i + 3) {
+    	for (int i = 0; i < polis.size(); i = i + 4) {
     		String[] toAdd = new String[3];
-    		toAdd[0] = targets.get(i);
-    		toAdd[1] = targets.get(i+1);
-    		toAdd[2] = targets.get(i+2);
-    		targetsListModel.addRow(toAdd);
+    		toAdd[0] = polis.get(i);
+    		toAdd[1] = polis.get(i+1);
+    		toAdd[2] = polis.get(i+2);
+    		poliListModel.addRow(toAdd);
     	}
     	
     	cs.gridx = x;
     	cs.gridy = y;
-    	JScrollPane pane = new JScrollPane(targetList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+    	JScrollPane pane = new JScrollPane(poliList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
     													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    	pane.setPreferredSize(new Dimension(appWidth/2, Math.min(20 + targets.size() * 16 / 3, 132)));
+    	pane.setPreferredSize(new Dimension(appWidth/2, Math.min(20 + polis.size() * 16 / 3, 132)));
     	panel.add(pane, cs);
     	frame.setVisible(true);
     	
     	MouseListener tableMouseListener = new MouseAdapter() {
     		public void mouseClicked(MouseEvent e) {
-    			int row = targetList.getSelectedRow();
+    			int row = poliList.getSelectedRow();
     			int col = 0;
-    			// selected = charID to spy on
-    			int selected = Integer.parseInt(targetList.getModel().getValueAt(row, col).toString().trim());
-    			displaySpyButton(selected, 0, 10, charID);
+    			// selected = charID to assassinate
+    			int selected = Integer.parseInt(poliList.getModel().getValueAt(row, col).toString().trim());
+    			displayFundButton(selected, charID, 0, 10);
     			frame.repaint();
     		}
     	};
     	
-    	targetList.addMouseListener(tableMouseListener);
+    	poliList.addMouseListener(tableMouseListener);
     }
 	
-	public void displaySpyButton(int victim, int x, int y, int charID){
-    	JButton spyButton = new JButton("Intercept!");
-    	spyButton.setLocation(200,150);
-    	spyButton.addActionListener(new ActionListener(){
+	public void displayFundButton(int to, int from, int x, int y){
+    	JButton fundButton = new JButton("Donate.");
+    	fundButton.setLocation(200,150);
+    	fundButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
-    		database.getActions(victim);
-    		database.logAction(charID, 1);
+    		database.transferMoney(to, from);
+    		database.logAction(from, 4);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
-    	panel.add(spyButton, cs); 
+    	panel.add(fundButton, cs); 
     	frame.setVisible(true);
     	
     }

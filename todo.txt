@@ -21,3 +21,16 @@ Sign up button does this, as one example.
 
 8. Graphical user interface - IN PROG/DONE
 Obviously there’s a GUI…
+
+=== Action types ===
+Spy:
+0 - assassinate
+1 - intercept
+
+Politician:
+2 - speech
+3 - campaign
+
+Businessman:
+4 - fund politician
+5 - pay spy

@@ -21,7 +21,7 @@ import javax.swing.JTable;
 
 import database.Database;
 
-public class InterceptDialog extends JDialog {
+public class PaySpyDialog extends JDialog {
 	
 	public Database database; 
 	public JFrame frame;
@@ -33,10 +33,10 @@ public class InterceptDialog extends JDialog {
 	public int appHeight = 480;
 	public boolean isAdmin = false;
 	
-	public InterceptDialog(JFrame parent, Database database, int charID) {
-		   super(parent, "Spy", true);
+	public PaySpyDialog(JFrame parent, Database database, int charID) {
+		   super(parent, "Hire a Spy", true);
 		    
-	       frame = new JFrame("Choose your Target!");
+	       frame = new JFrame("Pay a Spy");
 	       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	       frame.setSize(appWidth, appHeight);
 	       frame.setLayout(new FlowLayout());
@@ -45,63 +45,63 @@ public class InterceptDialog extends JDialog {
 	       panel = new JPanel(new GridBagLayout());
 	       cs = new GridBagConstraints();
 	       frame.add(panel);
-	       	        
-	       this.displayTargetList(charID, 0, 1);
+	        
+	       this.displaySpyList(charID, 0, 1);
 	}
 	
-	public void displayTargetList(int charID, int x, int y) {
-		System.out.println("In displayTargetList, pre-query");
+	public void displaySpyList(int charID, int x, int y) {
+		System.out.println("In displaySpyList, pre-query");
 		
-    	ArrayList<String> targets = database.getEnemiesList(charID);
+    	ArrayList<String> spies = database.getSpyList();
     	
-    	TableView targetsListModel = new TableView(new String[]{"ID", "Name", "Level"}, 0);
+    	TableView spyListModel = new TableView(new String[]{"ID", "Name", "Success %"}, 0);
     	
-    	JTable targetList = new JTable(targetsListModel);
+    	JTable spyList = new JTable(spyListModel);
     	
-    	System.out.println("displayEnemyList query done, table created");
+    	System.out.println("displaySpyList query done, table created");
     	
-    	for (int i = 0; i < targets.size(); i = i + 3) {
+    	for (int i = 0; i < spies.size(); i = i + 4) {
     		String[] toAdd = new String[3];
-    		toAdd[0] = targets.get(i);
-    		toAdd[1] = targets.get(i+1);
-    		toAdd[2] = targets.get(i+2);
-    		targetsListModel.addRow(toAdd);
+    		toAdd[0] = spies.get(i);
+    		toAdd[1] = spies.get(i+1);
+    		toAdd[2] = spies.get(i+2);
+    		spyListModel.addRow(toAdd);
     	}
     	
     	cs.gridx = x;
     	cs.gridy = y;
-    	JScrollPane pane = new JScrollPane(targetList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+    	JScrollPane pane = new JScrollPane(spyList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
     													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    	pane.setPreferredSize(new Dimension(appWidth/2, Math.min(20 + targets.size() * 16 / 3, 132)));
+    	pane.setPreferredSize(new Dimension(appWidth/2, Math.min(20 + spies.size() * 16 / 3, 132)));
     	panel.add(pane, cs);
     	frame.setVisible(true);
     	
     	MouseListener tableMouseListener = new MouseAdapter() {
     		public void mouseClicked(MouseEvent e) {
-    			int row = targetList.getSelectedRow();
+    			int row = spyList.getSelectedRow();
     			int col = 0;
-    			// selected = charID to spy on
-    			int selected = Integer.parseInt(targetList.getModel().getValueAt(row, col).toString().trim());
-    			displaySpyButton(selected, 0, 10, charID);
+    			// selected = charID to assassinate
+    			int selected = Integer.parseInt(spyList.getModel().getValueAt(row, col).toString().trim());
+    			displayPaySpyButton(selected, charID, 0, 10);
     			frame.repaint();
     		}
     	};
     	
-    	targetList.addMouseListener(tableMouseListener);
+    	spyList.addMouseListener(tableMouseListener);
     }
 	
-	public void displaySpyButton(int victim, int x, int y, int charID){
-    	JButton spyButton = new JButton("Intercept!");
-    	spyButton.setLocation(200,150);
-    	spyButton.addActionListener(new ActionListener(){
+	public void displayPaySpyButton(int to, int from, int x, int y){
+    	JButton hireButton = new JButton("Pay.");
+    	hireButton.setLocation(200,150);
+    	hireButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
-    		database.getActions(victim);
-    		database.logAction(charID, 1);
+    		database.transferMoney(to, from);
+    		database.logAction(from, 0);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
-    	panel.add(spyButton, cs); 
+    	panel.add(hireButton, cs); 
     	frame.setVisible(true);
     	
     }

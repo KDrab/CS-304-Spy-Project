@@ -436,4 +436,39 @@ public class Database {
         }
         
 	}
+
+	public ArrayList<String> getPoliList() {
+		// TODO get list of all politicians
+		return null;
+	}
+
+	public void transferMoney(int to, int from) {
+		// TODO transfer money between characters
+		
+	}
+
+	public ArrayList<String> getSpyList() {
+		// TODO get list of all spies
+		return null;
+	}
+
+	public void createCampaign(int charID, int type) {
+		// TODO update politician charID's cash and popularity based on type of marketing campaign (cost and effect)
+		
+	}
+
+	public void giveSpeech(int charID, int cost) {
+		// TODO update politician charID's cash and popularity based on type of speech (cost and effect)
+		
+	}
+
+	public void getActions(int victim) {
+		// TODO for spy, get list of actions of victim
+		
+	}
+
+	public void logAction(int charID, int type) {
+		// TODO update action table with entry value(charID, time, type)
+		
+	}
 }
