@@ -88,7 +88,7 @@ public class PaySpyDialog extends JDialog {
 	           }
 	       });
 	       
-	       displaySpyList(charID, 0, 4);
+	       displaySpyList(charID, 0, 1);
 	        
 	       JPanel bp = new JPanel();
 	       bp.add(btnCancel);
@@ -114,18 +114,27 @@ public class PaySpyDialog extends JDialog {
     	
     	System.out.println("displaySpyList query done, table created");
     	
-    	for (int i = 0; i < spies.size(); i = i + 4) {
+    	for (int i = 0; i < spies.size(); i = spies.size()) {
     		String[] toAdd = new String[3];
+    		System.out.println("toAdd created");
     		toAdd[0] = spies.get(i);
     		toAdd[1] = spies.get(i+1);
     		toAdd[2] = spies.get(i+2);
     		spyListModel.addRow(toAdd);
+    		System.out.println("row added");
     	}
     	
     	int amt = 0;
     	
+    	System.out.println("out of for");
+    	
+    	// BROKEN HERE FOR SOME REASON????!!
+    	
     	cs.gridx = x;
     	cs.gridy = y;
+    	
+    	System.out.println("grid coord done");
+    	
     	JScrollPane pane = new JScrollPane(spyList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
     													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     	pane.setPreferredSize(new Dimension(appWidth/2, Math.min(20 + spies.size() * 16 / 3, 132)));
