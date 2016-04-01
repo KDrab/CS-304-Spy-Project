@@ -1,6 +1,8 @@
 package database;
 import java.sql.*;
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Database {
 	private Connection con;
@@ -572,17 +574,82 @@ public class Database {
 	}
 
 	public void giveSpeech(String charID, int cost) {
-		// TODO update politician charID's cash and popularity based on type of speech (cost and effect)
-		
+		//  update politician charID's cash and popularity based on type of speech (cost and effect)
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT c.id, c.cash, p.popularity FROM character c, politician p WHERE p.id = c.id AND c.id = '" + charID + "'");
+			
+			ArrayList<String> character = new ArrayList<String>();
+			
+			while (rs.next()){
+				character.add(rs.getString("id"));
+				character.add(rs.getString("cash"));
+				character.add(rs.getString("popularity"));
+			}
+            int cash = Integer.getInteger(character.get(1));
+            int pop = Integer.getInteger(character.get(2));
+            int newcash;
+            double newpop;
+            
+            if (cost == 120) {
+            	newcash = cash - 120;
+            	newpop = pop + 25;
+            } else if (cost == 60) {
+            	newcash = cash - 60;
+            	newpop = pop + 12;
+            } else if (cost == 30) {
+            	newcash = cash - 30;
+            	newpop = pop + 6;
+            } else {
+            	if (cost == 10) {
+            		newcash = cash - 10;
+            		newpop = pop + 2;
+            	} else {
+            		System.err.println("Got error in giveSpeech(), no changes");
+                	newcash = cash;
+                	newpop = pop;
+            	}
+            }
+            
+            Statement update = con.createStatement();
+            update.executeQuery("UPDATE character SET cash = " + newcash + " WHERE id = '" + character.get(0) + "'");  
+            update.executeQuery("UPDATE politician SET popularity = " + newpop + " WHERE id = '" + character.get(0) + "'");  
+        } catch (Exception e) {
+            System.err.println("Got giveSpeech() exception! ");
+            System.err.println(e.getMessage());
+        }
 	}
 
 	public void getActions(String victim) {
-		// TODO for spy, get list of actions of victim
-		
+		// for spy, get list of actions of victim
+		try {
+			Statement stmt = con.createStatement();
+			String query = "SELECT * FROM action WHERE id = " + victim + ")";
+			ResultSet rs = stmt.executeQuery(query);
+			
+			ArrayList<String> actions = new ArrayList<String>();
+			
+			while (rs.next()){
+				actions.add(rs.getString("id"));
+				actions.add(rs.getString("time"));
+				actions.add(rs.getString("type"));
+			}
+		} catch (SQLException e) {
+			System.err.println("Got getActions() exception! ");
+            System.err.println(e.getMessage());
+		}
 	}
 
 	public void logAction(String charID, int type) {
-		// TODO update action table with entry value(charID, time, type)
-		
+		// update action table with entry value(charID, time, type)
+		try {
+			long time = System.currentTimeMillis();
+			Statement stmt = con.createStatement();
+			String query = "INSERT INTO action values( '" + charID + "', '" + time + "', '" + type + "')";
+			ResultSet rs = stmt.executeQuery(query);
+		} catch (SQLException e) {
+			System.err.println("Got logAction() exception! ");
+            System.err.println(e.getMessage());
+		}
 	}
 }

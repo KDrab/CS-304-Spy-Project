@@ -58,7 +58,7 @@ public class SpeechDialog extends JDialog {
     	
     	int cash = Integer.parseInt(stats.get(3).toString().trim());
     	
-    	// more/less expensive campaign options
+    	// more/less expensive speech options
     	String[] type1 = {"Type 1", "120"};
     	String[] type2 = {"Type 2", "60"};
     	String[] type3 = {"Type 3", "30"};
@@ -88,7 +88,7 @@ public class SpeechDialog extends JDialog {
     			// selected = charID to assassinate
     			int selected = Integer.parseInt(speechList.getModel().getValueAt(row, col).toString().trim());
     			if (selected <= cash) {
-    				displaySpeechButton(charID, row, 0, 10);
+    				displaySpeechButton(charID, selected, 0, 10);
     			} else {
     				JOptionPane.showMessageDialog(SpeechDialog.this, "Not Enough Funds!", "Cancel", JOptionPane.ERROR_MESSAGE);
     			}
