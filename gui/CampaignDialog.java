@@ -35,7 +35,7 @@ public class CampaignDialog extends JDialog {
 	public int appHeight = 480;
 	public boolean isAdmin = false;
 	
-	public CampaignDialog(JFrame parent, Database database, int charID) {
+	public CampaignDialog(JFrame parent, Database database, String charID) {
 		   super(parent, "Start a Campaign", true);
 		    
 	       frame = new JFrame("Start a New Marketing Campaign");
@@ -51,7 +51,7 @@ public class CampaignDialog extends JDialog {
 	       this.displayCampaignList(charID, 0, 1);
 	}
 	
-	public void displayCampaignList(int charID, int x, int y) {
+	public void displayCampaignList(String charID, int x, int y) {
 		System.out.println("In displayCampaignList, pre-query");
 		
     	ArrayList<String> stats = database.getCharacterStats(charID);
@@ -84,11 +84,11 @@ public class CampaignDialog extends JDialog {
     	MouseListener tableMouseListener = new MouseAdapter() {
     		public void mouseClicked(MouseEvent e) {
     			int row = campaignList.getSelectedRow();
-    			int col = 1;
     			// selected = charID to assassinate
-    			int selected = Integer.parseInt(campaignList.getModel().getValueAt(row, col).toString().trim());
-    			if (selected <= cash) {
-    				displayCampaignButton(charID, row, 0, 10);
+    			int selectedCost = Integer.parseInt(campaignList.getModel().getValueAt(row, 1).toString().trim());
+    			String selected = campaignList.getModel().getValueAt(row, 0).toString().trim();
+    			if (selectedCost <= cash) {
+    				displayCampaignButton(charID, selected, 0, 10);
     			} else {
     				JOptionPane.showMessageDialog(CampaignDialog.this, "Not Enough Funds!", "Cancel", JOptionPane.ERROR_MESSAGE);
     			}
@@ -99,7 +99,7 @@ public class CampaignDialog extends JDialog {
     	campaignList.addMouseListener(tableMouseListener);
     }
 	
-	public void displayCampaignButton(int charID, int type, int x, int y){
+	public void displayCampaignButton(String charID, String type, int x, int y){
     	JButton campaignButton = new JButton("Pay for Type " + type);
     	campaignButton.setLocation(200,150);
     	campaignButton.addActionListener(new ActionListener(){

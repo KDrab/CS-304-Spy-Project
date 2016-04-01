@@ -35,7 +35,7 @@ public class SpeechDialog extends JDialog {
 	public int appHeight = 480;
 	public boolean isAdmin = false;
 	
-	public SpeechDialog(JFrame parent, Database database, int charID) {
+	public SpeechDialog(JFrame parent, Database database, String charID) {
 		   super(parent, "Start a Campaign", true);
 		    
 	       frame = new JFrame("Start a New Marketing Campaign");
@@ -51,7 +51,7 @@ public class SpeechDialog extends JDialog {
 	       this.displaySpeechList(charID, 0, 1);
 	}
 	
-	public void displaySpeechList(int charID, int x, int y) {
+	public void displaySpeechList(String charID, int x, int y) {
 		System.out.println("In displaySpeechList, pre-query");
 		
     	ArrayList<String> stats = database.getCharacterStats(charID);
@@ -99,7 +99,7 @@ public class SpeechDialog extends JDialog {
     	speechList.addMouseListener(tableMouseListener);
     }
 	
-	public void displaySpeechButton(int charID, int cost, int x, int y){
+	public void displaySpeechButton(String charID, int cost, int x, int y){
     	JButton campaignButton = new JButton("Give Speech for " + cost);
     	campaignButton.setLocation(200,150);
     	campaignButton.addActionListener(new ActionListener(){

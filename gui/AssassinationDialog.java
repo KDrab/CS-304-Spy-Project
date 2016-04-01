@@ -33,7 +33,7 @@ public class AssassinationDialog extends JDialog {
 	public int appHeight = 480;
 	public boolean isAdmin = false;
 	
-	public AssassinationDialog(JFrame parent, Database database, int charID) {
+	public AssassinationDialog(JFrame parent, Database database, String charID) {
 		   super(parent, "Assassination", true);
 		    
 	       frame = new JFrame("Choose your Victim!");
@@ -53,7 +53,7 @@ public class AssassinationDialog extends JDialog {
 	       System.out.println("AD enemies added");
 	}
 	
-	public void displayEnemyList(int charID, int x, int y) {
+	public void displayEnemyList(String charID, int x, int y) {
 		System.out.println("In displayEnemyList, pre-query");
 		
     	ArrayList<String> enemies = database.getEnemiesList(charID);
@@ -94,7 +94,7 @@ public class AssassinationDialog extends JDialog {
     	enemyList.addMouseListener(tableMouseListener);
     }
 	
-	public void displayKillButton(int victim, int x, int y, int charID){
+	public void displayKillButton(int victim, int x, int y, String charID){
     	JButton killButton = new JButton("Kill");
     	killButton.setLocation(200,150);
     	killButton.addActionListener(new ActionListener(){

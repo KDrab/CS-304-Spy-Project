@@ -154,13 +154,13 @@ public class Database {
         }
 	}
 	
-	public ArrayList<String> getCharacterStats(int charID){
+	public ArrayList<String> getCharacterStats(String charID){
         //returns all the stats for a character given an id
         try {
             ArrayList<String> stats = new ArrayList<String>();
         
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM character WHERE id = " + charID);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM character WHERE id = '" + charID.trim() + "'");
         
             while (rs.next()) {
                 stats.add(rs.getString("id"));
@@ -276,17 +276,16 @@ public class Database {
         }
 	}
 	
-	public int checkPlayerType(int id){
+	public int checkPlayerType(String charID){
         // return list of all team names
         try {        
             Statement stmt1 = con.createStatement();
             Statement stmt2 = con.createStatement();
             Statement stmt3 = con.createStatement();
-            ResultSet spyRS = stmt1.executeQuery("SELECT c.id FROM character c, spy s WHERE c.id = s.id AND c.id = " + id);
-            ResultSet poliRS = stmt2.executeQuery("SELECT c.id FROM character c, politician p WHERE c.id = p.id AND c.id = " + id);
-            ResultSet bizRS = stmt3.executeQuery("SELECT c.id FROM character c, businessman b WHERE c.id = b.id AND c.id = " + id);
+            ResultSet spyRS = stmt1.executeQuery("SELECT c.id FROM character c, spy s WHERE c.id = s.id AND c.id = " + charID);
+            ResultSet poliRS = stmt2.executeQuery("SELECT c.id FROM character c, politician p WHERE c.id = p.id AND c.id = " + charID);
+            ResultSet bizRS = stmt3.executeQuery("SELECT c.id FROM character c, businessman b WHERE c.id = b.id AND c.id = " + charID);
             
-            System.out.println("Spy? " + spyRS.next() + "; Poli? " + poliRS.next() + "; Biz? " + bizRS.next());
             int t = 0;
             
             // query works, gets the correct 'type' for each player but checking if the ResultSets are empty does not work
@@ -301,7 +300,7 @@ public class Database {
             }
             return t;
         } catch (Exception e) {
-            System.err.println("Got an exception! ");
+            System.err.println("Got a checkPlayerType() exception! ");
             System.err.println(e.getMessage());
             return 0;
         }
@@ -393,7 +392,7 @@ public class Database {
 		}
 	}
 
-	public ArrayList<String> getEnemiesList(int charID) {
+	public ArrayList<String> getEnemiesList(String charID) {
 		try {
 			System.out.println("In getEnemiesList query top...");
 			
@@ -483,7 +482,7 @@ public class Database {
         }
 	}
 	
-	public void transferMoney(int to, int from, int amt) {
+	public void transferMoney(String to, String from, int amt) {
 		try{
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("select id, cash from character where id = '" + to
@@ -525,22 +524,64 @@ public class Database {
 		
 	}
 
-	public void createCampaign(int charID, int type) {
+	public void createCampaign(String charID, String type) {
 		// TODO update politician charID's cash and popularity based on type of marketing campaign (cost and effect)
-		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT id, cash, popularity FROM character c, politician p WHERE p.id = c.id AND c.id = '" + charID + "'");
+			
+			ArrayList<String> character = new ArrayList<String>();
+			
+			while (rs.next()){
+				character.add(rs.getString("id"));
+				character.add(rs.getString("cash"));
+				character.add(rs.getString("popularity"));
+			}
+            int cash = Integer.getInteger(character.get(1));
+            int pop = Integer.getInteger(character.get(2));
+            int newcash;
+            double newpop;
+            
+            if (type == "Type 1") {
+            	newcash = cash - 200;
+            	newpop = pop + 50;
+            } else if (type == "Type 2") {
+            	newcash = cash - 100;
+            	newpop = pop + 25;
+            } else if (type == "Type 3") {
+            	newcash = cash - 50;
+            	newpop = pop + 12;
+            } else {
+            	if (type == "Type 4") {
+            		newcash = cash - 25;
+            		newpop = pop + 5;
+            	} else {
+            		System.err.println("Got error in createCampaign()");
+                	newcash = cash;
+                	newpop = pop;
+            	}
+            }
+            
+            Statement update = con.createStatement();
+            update.executeQuery("UPDATE character SET cash = " + newcash + " WHERE id = '" + character.get(0) + "'");  
+            update.executeQuery("UPDATE politician SET popularity = " + newpop + " WHERE id = '" + character.get(0) + "'");  
+        } catch (Exception e) {
+            System.err.println("Got createCampaign() exception! ");
+            System.err.println(e.getMessage());
+        }
 	}
 
-	public void giveSpeech(int charID, int cost) {
+	public void giveSpeech(String charID, int cost) {
 		// TODO update politician charID's cash and popularity based on type of speech (cost and effect)
 		
 	}
 
-	public void getActions(int victim) {
+	public void getActions(String victim) {
 		// TODO for spy, get list of actions of victim
 		
 	}
 
-	public void logAction(int from, int type) {
+	public void logAction(String charID, int type) {
 		// TODO update action table with entry value(charID, time, type)
 		
 	}

@@ -33,7 +33,7 @@ public class FundPoliDialog extends JDialog {
 	public int appHeight = 480;
 	public boolean isAdmin = false;
 	
-	public FundPoliDialog(JFrame parent, Database database, int charID) {
+	public FundPoliDialog(JFrame parent, Database database, String charID) {
 		   super(parent, "Fund a Politician", true);
 		    
 	       frame = new JFrame("Fund a Politician");
@@ -49,7 +49,7 @@ public class FundPoliDialog extends JDialog {
 	       this.displayPoliList(charID, 0, 1);
 	}
 	
-	public void displayPoliList(int charID, int x, int y) {
+	public void displayPoliList(String charID, int x, int y) {
 		System.out.println("In displayPoliList, pre-query");
 		
     	ArrayList<String> polis = database.getPoliList();
@@ -68,7 +68,9 @@ public class FundPoliDialog extends JDialog {
     		poliListModel.addRow(toAdd);
     	}
     	
-    	int amt = 0;
+    	// TODO get user input for amount to donate
+    	
+    	int amt = 100;
     	
     	cs.gridx = x;
     	cs.gridy = y;
@@ -83,7 +85,7 @@ public class FundPoliDialog extends JDialog {
     			int row = poliList.getSelectedRow();
     			int col = 0;
     			// selected = charID to assassinate
-    			int selected = Integer.parseInt(poliList.getModel().getValueAt(row, col).toString().trim());
+    			String selected  = poliList.getModel().getValueAt(row, col).toString().trim();
     			displayFundButton(selected, charID, amt, 0, 10);
     			frame.repaint();
     		}
@@ -92,7 +94,7 @@ public class FundPoliDialog extends JDialog {
     	poliList.addMouseListener(tableMouseListener);
     }
 	
-	public void displayFundButton(int to, int from, int amt, int x, int y){
+	public void displayFundButton(String to, String from, int amt, int x, int y){
     	JButton fundButton = new JButton("Donate.");
     	fundButton.setLocation(200,150);
     	fundButton.addActionListener(new ActionListener(){

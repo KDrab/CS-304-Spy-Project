@@ -196,31 +196,6 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
-//    public void displayLeaderBoard() {
-//    	ArrayList<String> leaders = database.getLeaderBoard();
-//    	TableView leaderListModel = new TableView(new String[]{"Last PLace Team", "First Place Team"}, 0);
-//    	JTable leaderList = new JTable(leaderListModel);
-//    	
-//    	System.out.println("In displayLeaderBoard, querying done.");
-//    	
-//    	for (int i = leaders.size() - 1; i > 0; i = i - 2) {
-//    		System.out.println("In for...");
-//    		String[] toAdd = new String[4];
-//    		toAdd[0] = leaders.get(i);
-//    		toAdd[1] = leaders.get(i-1);
-//    		System.out.println("toAdd[] full.");
-//    		leaderListModel.addRow(toAdd);
-//    	}
-//    	
-//    	cs.gridx = 0;
-//    	cs.gridy = 1;
-//    	JScrollPane pane = new JScrollPane(leaderList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
-//    													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-//    	pane.setPreferredSize(new Dimension(appWidth/2, 52));
-//    	panel.add(pane, cs);
-//    	frame.setVisible(true);
-//    }
-    
     public void displayPlayerList() {
     	ArrayList<String> players = database.getPlayerList();
     	playerListModel = new TableView(new String[]{"Players"}, 0);
@@ -281,7 +256,7 @@ public class Homepage extends JFrame {
     		public void mouseClicked(MouseEvent e) {
     			int row = charList.getSelectedRow();
     			int col = 0;
-    			int selected = Integer.parseInt(charList.getModel().getValueAt(row, col).toString().trim());
+    			String selected = charList.getModel().getValueAt(row, col).toString().trim();
     			
     			// check type of player here
     			int type = database.checkPlayerType(selected);
@@ -324,7 +299,7 @@ public class Homepage extends JFrame {
     	charList.addMouseListener(tableMouseListener);
     }
     
-    public void displayCharStats(int id, int x, int y) {
+    public void displayCharStats(String id, int x, int y) {
     	ArrayList<String> values = database.getCharacterStats(id);
 		System.out.println(values);
 		
@@ -347,7 +322,7 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
-    public void displayAssassinationButton(int x, int y, int charID){
+    public void displayAssassinationButton(int x, int y, String charID){
     	JButton assassinateButton = new JButton("Assassinatae");
     	assassinateButton.setLocation(200,150);
     	assassinateButton.addActionListener(new ActionListener(){
@@ -364,7 +339,7 @@ public class Homepage extends JFrame {
     	
     }
     
-    public void displayInterceptButton(int x, int y, int charID){
+    public void displayInterceptButton(int x, int y, String charID){
     	JButton interceptButton = new JButton("Intercept");
     	interceptButton.setLocation(200,150);
     	interceptButton.addActionListener(new ActionListener(){
@@ -379,7 +354,7 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
-    public void displaySpeechButton(int x, int y, int charID) {
+    public void displaySpeechButton(int x, int y, String charID) {
     	JButton speechButton = new JButton("Give Speech");
     	speechButton.setLocation(200,150);
     	speechButton.addActionListener(new ActionListener(){
@@ -394,7 +369,7 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
-    public void displayCampaignButton(int x, int y, int charID) {
+    public void displayCampaignButton(int x, int y, String charID) {
     	JButton campaignButton = new JButton("Campaign...");
     	campaignButton.setLocation(200,150);
     	campaignButton.addActionListener(new ActionListener(){
@@ -410,7 +385,7 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
-    public void displayFundPoliticianButton(int x, int y, int charID) {
+    public void displayFundPoliticianButton(int x, int y, String charID) {
     	JButton fundPoliBtn = new JButton("Donate...");
     	fundPoliBtn.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
@@ -424,7 +399,7 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
 
-    public void displayPaySpyButton(int x, int y, int charID) {
+    public void displayPaySpyButton(int x, int y, String charID) {
     	JButton paySpyBtn = new JButton("Pay a Spy");
     	paySpyBtn.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {

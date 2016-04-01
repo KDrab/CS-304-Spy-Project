@@ -33,7 +33,7 @@ public class InterceptDialog extends JDialog {
 	public int appHeight = 480;
 	public boolean isAdmin = false;
 	
-	public InterceptDialog(JFrame parent, Database database, int charID) {
+	public InterceptDialog(JFrame parent, Database database, String charID) {
 		   super(parent, "Spy", true);
 		    
 	       frame = new JFrame("Choose your Target!");
@@ -49,7 +49,7 @@ public class InterceptDialog extends JDialog {
 	       this.displayTargetList(charID, 0, 1);
 	}
 	
-	public void displayTargetList(int charID, int x, int y) {
+	public void displayTargetList(String charID, int x, int y) {
 		System.out.println("In displayTargetList, pre-query");
 		
     	ArrayList<String> targets = database.getEnemiesList(charID);
@@ -81,7 +81,7 @@ public class InterceptDialog extends JDialog {
     			int row = targetList.getSelectedRow();
     			int col = 0;
     			// selected = charID to spy on
-    			int selected = Integer.parseInt(targetList.getModel().getValueAt(row, col).toString().trim());
+    			String selected = targetList.getModel().getValueAt(row, col).toString().trim();
     			displaySpyButton(selected, 0, 10, charID);
     			frame.repaint();
     		}
@@ -90,13 +90,13 @@ public class InterceptDialog extends JDialog {
     	targetList.addMouseListener(tableMouseListener);
     }
 	
-	public void displaySpyButton(int victim, int x, int y, int charID){
+	public void displaySpyButton(String selected, int x, int y, String charID){
     	JButton spyButton = new JButton("Intercept!");
     	spyButton.setLocation(200,150);
     	spyButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
-    		database.getActions(victim);
+    		database.getActions(selected);
     		database.logAction(charID, 1);
     	}});
     	cs.gridx = x;

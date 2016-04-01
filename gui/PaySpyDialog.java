@@ -40,9 +40,9 @@ public class PaySpyDialog extends JDialog {
 	public JLabel amtLbl;
 	public JTextField amt;
 	
-	public PaySpyDialog(JFrame parent, Database db, int charID) {
+	public PaySpyDialog(JFrame parent, Database db, String charID) {
 		   super(parent, "Hire a Spy", true);
-		   
+		   charID = charID.trim();
 		   database = db;
 		    
 		   JPanel panel = new JPanel(new GridBagLayout());
@@ -103,7 +103,7 @@ public class PaySpyDialog extends JDialog {
 //	       this.displaySpyList(charID, 0, 4);
 	}
 	
-	public void displaySpyList(int charID, int x, int y) {
+	public void displaySpyList(String charID, int x, int y) {
 		System.out.println("In displaySpyList, pre-query");
 		
     	ArrayList<String> spies = database.getSpyList(); 
@@ -146,7 +146,7 @@ public class PaySpyDialog extends JDialog {
     			int row = spyList.getSelectedRow();
     			int col = 0;
     			// selected = charID to assassinate
-    			int selected = Integer.parseInt(spyList.getModel().getValueAt(row, col).toString().trim());
+    			String selected = spyList.getModel().getValueAt(row, col).toString().trim();
     			displayPaySpyButton(selected, charID, amt, 0, 10);
     			frame.repaint();
     		}
@@ -155,7 +155,7 @@ public class PaySpyDialog extends JDialog {
     	spyList.addMouseListener(tableMouseListener);
     }
 	
-	public void displayPaySpyButton(int to, int from, int amt, int x, int y){
+	public void displayPaySpyButton(String to, String from, int amt, int x, int y){
     	JButton hireButton = new JButton("Pay.");
     	hireButton.setLocation(200,150);
     	hireButton.addActionListener(new ActionListener(){
