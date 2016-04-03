@@ -527,7 +527,7 @@ public class Database {
 	}
 
 	public void createCampaign(String charID, String type) {
-		// TODO update politician charID's cash and popularity based on type of marketing campaign (cost and effect)
+		// update politician charID's cash and popularity based on type of marketing campaign (cost and effect)
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT id, cash, popularity FROM character c, politician p WHERE p.id = c.id AND c.id = '" + charID + "'");
@@ -574,7 +574,7 @@ public class Database {
 	}
 
 	public void giveSpeech(String charID, int cost) {
-		//  update politician charID's cash and popularity based on type of speech (cost and effect)
+		// update politician charID's cash and popularity based on type of speech (cost and effect)
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT c.id, c.cash, p.popularity FROM character c, politician p WHERE p.id = c.id AND c.id = '" + charID + "'");

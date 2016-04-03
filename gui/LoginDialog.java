@@ -69,7 +69,6 @@ public class LoginDialog extends JDialog  {
                     uname.setText("");
                     pass.setText("");
                     succeeded = false;
-                    
                 }
             }
         });
