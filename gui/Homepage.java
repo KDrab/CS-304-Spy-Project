@@ -391,7 +391,9 @@ public class Homepage extends JFrame {
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
     		System.out.println("Donate clicked!");
-    		FundPoliDialog id = new FundPoliDialog(frame, database, charID);
+//    		FundPoliDialog id = new FundPoliDialog(frame, database, charID);
+    		JOptionPane.showMessageDialog(Homepage.this, "Fund a Politician!", "Donate...", JOptionPane.INFORMATION_MESSAGE);
+    		fundPoliBtn.setSelected(false);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
@@ -405,7 +407,9 @@ public class Homepage extends JFrame {
     	public void actionPerformed(ActionEvent e) {
     		panel.removeAll();
     		System.out.println("Pay Spy clicked!");
-    		PaySpyDialog id = new PaySpyDialog(frame, database, charID);
+//    		PaySpyDialog id = new PaySpyDialog(frame, database, charID);
+    		JOptionPane.showMessageDialog(Homepage.this, "Spy on someone.", "Spy...", JOptionPane.INFORMATION_MESSAGE);
+    		paySpyBtn.setSelected(false);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
