@@ -1,0 +1,9 @@
+Project Accomplishments:
+
+Our project provides a GUI for management of a game system. Players can log in and log out of 
+our system after registering using their email, a selected username, and password, stored in 
+our database. After setting up a player account, a user is able to create a character selectable
+from the 3 classes: Businessman, Politician, and Spy. Each character is given 2 actions that can 
+be selected. A list of a player's characters is given on each user's homepage which can be 
+selected independently from one another. Finally, players can see who is on the winning team,
+and who is on the losing team.
