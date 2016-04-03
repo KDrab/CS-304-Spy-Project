@@ -29,7 +29,6 @@ import database.Database;
 public class PaySpyDialog extends JDialog {
 	
 	public Database database; 
-	public JFrame frame;
 	public JPanel panel;
 	public GridBagConstraints cs;
 	public JTable playerList;
@@ -45,8 +44,8 @@ public class PaySpyDialog extends JDialog {
 		   charID = charID.trim();
 		   database = db;
 		    
-		   JPanel panel = new JPanel(new GridBagLayout());
-	       GridBagConstraints cs = new GridBagConstraints();
+		   panel = new JPanel(new GridBagLayout());
+	       cs = new GridBagConstraints();
 	        
 	       cs.fill = GridBagConstraints.HORIZONTAL;
 	       
@@ -100,7 +99,7 @@ public class PaySpyDialog extends JDialog {
 	       setResizable(false);
 	       setLocationRelativeTo(parent);
 	        
-//	       this.displaySpyList(charID, 0, 4);
+	       //this.displaySpyList(charID, 0, 4);
 	}
 	
 	public void displaySpyList(String charID, int x, int y) {
@@ -139,7 +138,6 @@ public class PaySpyDialog extends JDialog {
     													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     	pane.setPreferredSize(new Dimension(appWidth/2, Math.min(20 + spies.size() * 16 / 3, 132)));
     	panel.add(pane, cs);
-    	frame.setVisible(true);
     	
     	MouseListener tableMouseListener = new MouseAdapter() {
     		public void mouseClicked(MouseEvent e) {
@@ -148,7 +146,6 @@ public class PaySpyDialog extends JDialog {
     			// selected = charID to assassinate
     			String selected = spyList.getModel().getValueAt(row, col).toString().trim();
     			displayPaySpyButton(selected, charID, amt, 0, 10);
-    			frame.repaint();
     		}
     	};
     	
@@ -167,7 +164,6 @@ public class PaySpyDialog extends JDialog {
     	cs.gridx = x;
     	cs.gridy = y;
     	panel.add(hireButton, cs); 
-    	frame.setVisible(true);
     	
     }
 	
