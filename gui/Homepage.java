@@ -404,11 +404,11 @@ public class Homepage extends JFrame {
     	JButton paySpyBtn = new JButton("Pay a Spy");
     	paySpyBtn.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
-    		panel.removeAll();
+//    		panel.removeAll();
     		System.out.println("Pay Spy clicked!");
-    		paySpyBtn.setSelected(false);
 //    		PaySpyDialog id = new PaySpyDialog(frame, database, charID);
     		JOptionPane.showConfirmDialog(frame, "Spy on someone...", "Spy Action", JOptionPane.INFORMATION_MESSAGE);
+    		paySpyBtn.setSelected(false);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
