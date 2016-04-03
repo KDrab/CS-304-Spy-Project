@@ -57,6 +57,7 @@ public class Homepage extends JFrame {
         			displayWinnerButton();
         			displayLoserButton();
         			displayTeamList();
+        			displayFindPlayerButton();
         			frame.repaint();
         			isAdmin = true;
         			return;
@@ -422,6 +423,23 @@ public class Homepage extends JFrame {
     	cs.gridy = y;
     	panel.add(paySpyBtn, cs); 
     	frame.setVisible(true);
+    }
+    
+    public void displayFindPlayerButton(){
+    	JButton findPlayerButton = new JButton("Check Stats");
+    	cs.gridx = 0;
+    	cs.gridy = 4;
+    	panel.add(findPlayerButton, cs);
+    	
+    	findPlayerButton.addActionListener(new ActionListener(){
+    		public void actionPerformed(ActionEvent e){
+    			StatsDialog sd = new StatsDialog(frame, database);
+    			sd.setVisible(true);
+    			
+    		}
+    	});
+    	frame.setVisible(true);
+    	
     }
 
 }

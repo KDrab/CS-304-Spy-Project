@@ -652,4 +652,54 @@ public class Database {
             System.err.println(e.getMessage());
 		}
 	}
+	
+	public ArrayList<String> getStats(String name, boolean id, boolean level, boolean cash, boolean team){
+		ArrayList<String> returnList = new ArrayList<String>();
+		try {
+			Statement stmt = con.createStatement();
+
+		String query = "select ";
+		if (id)
+			query += "id";
+		if (id && level)
+			query += ", ";
+		if (level)
+			query += "lvl";
+		if (level && cash)
+			query += ", ";
+		if (cash)
+			query += "cash";
+		if (cash && team)
+			query += ", ";
+		if (team)
+			query += "teamName";
+		
+		query += " from character where name = '" + name + "'";
+		
+		System.out.println(query);
+		
+		ResultSet rs = stmt.executeQuery(query);
+		
+		while(rs.next()){
+			returnList.add(name);
+			
+			if (id)
+				returnList.add(rs.getString("id").trim());
+			if (level)
+				returnList.add(rs.getString("lvl").trim());
+			if (cash)
+				returnList.add(rs.getString("cash").trim());
+			if (team)
+				returnList.add(rs.getString("teamName").trim());
+		}
+		
+		return returnList;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+		
 }
