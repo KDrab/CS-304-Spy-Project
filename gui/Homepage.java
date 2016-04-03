@@ -377,7 +377,6 @@ public class Homepage extends JFrame {
     		panel.removeAll();
     		System.out.println("Campaign clicked!");
     		CampaignDialog id = new CampaignDialog(frame, database, charID);
-    		
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
@@ -409,7 +408,7 @@ public class Homepage extends JFrame {
     		System.out.println("Pay Spy clicked!");
     		paySpyBtn.setSelected(false);
 //    		PaySpyDialog id = new PaySpyDialog(frame, database, charID);
-    		JOptionPane.showMessageDialog(frame, "Spy on someone...", "Spy Action", JOptionPane.INFORMATION_MESSAGE);
+    		JOptionPane.showConfirmDialog(frame, "Spy on someone...", "Spy Action", JOptionPane.INFORMATION_MESSAGE);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
