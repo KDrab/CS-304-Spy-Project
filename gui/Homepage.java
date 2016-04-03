@@ -323,14 +323,16 @@ public class Homepage extends JFrame {
     }
     
     public void displayAssassinationButton(int x, int y, String charID){
-    	JButton assassinateButton = new JButton("Assassinatae");
-    	assassinateButton.setLocation(200,150);
+    	JButton assassinateButton = new JButton("Assassinate");
+//    	assassinateButton.setLocation(200,150);
     	assassinateButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
-    		panel.removeAll();
+//    		panel.removeAll();
     		String name = "";
     		
-    		AssassinationDialog ad = new AssassinationDialog(frame, database, charID);
+//    		AssassinationDialog ad = new AssassinationDialog(frame, database, charID);
+    		JOptionPane.showMessageDialog(frame, "Assassinate", "Assassinate", JOptionPane.INFORMATION_MESSAGE);
+    		assassinateButton.setSelected(false);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
@@ -341,12 +343,14 @@ public class Homepage extends JFrame {
     
     public void displayInterceptButton(int x, int y, String charID){
     	JButton interceptButton = new JButton("Intercept");
-    	interceptButton.setLocation(200,150);
+ //   	interceptButton.setLocation(200,150);
     	interceptButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
-    		panel.removeAll();
+//    		panel.removeAll();
     		System.out.println("Intercept clicked!");
-    		InterceptDialog id = new InterceptDialog(frame, database, charID);
+//    		InterceptDialog id = new InterceptDialog(frame, database, charID);
+    		JOptionPane.showMessageDialog(frame, "Intercept Messages", "Intercept Transmissions", JOptionPane.INFORMATION_MESSAGE);
+    		interceptButton.setSelected(false);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
@@ -356,12 +360,14 @@ public class Homepage extends JFrame {
     
     public void displaySpeechButton(int x, int y, String charID) {
     	JButton speechButton = new JButton("Give Speech");
-    	speechButton.setLocation(200,150);
+//    	speechButton.setLocation(200,150);
     	speechButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
-    		panel.removeAll();
+//    		panel.removeAll();
     		System.out.println("Speech clicked!");
-    		SpeechDialog id = new SpeechDialog(frame, database, charID);
+//    		SpeechDialog id = new SpeechDialog(frame, database, charID);
+    		JOptionPane.showMessageDialog(frame, "Give A Speech", "Game Day", JOptionPane.INFORMATION_MESSAGE);
+    		speechButton.setSelected(false);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
@@ -371,12 +377,14 @@ public class Homepage extends JFrame {
     
     public void displayCampaignButton(int x, int y, String charID) {
     	JButton campaignButton = new JButton("Campaign...");
-    	campaignButton.setLocation(200,150);
+//    	campaignButton.setLocation(200,150);
     	campaignButton.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
-    		panel.removeAll();
+//    		panel.removeAll();
     		System.out.println("Campaign clicked!");
-    		CampaignDialog id = new CampaignDialog(frame, database, charID);
+//    		CampaignDialog id = new CampaignDialog(frame, database, charID);
+    		JOptionPane.showMessageDialog(frame, "Run A Campaign!", "Campaign Finance", JOptionPane.INFORMATION_MESSAGE);
+    		campaignButton.setSelected(false);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
@@ -388,7 +396,7 @@ public class Homepage extends JFrame {
     	JButton fundPoliBtn = new JButton("Donate...");
     	fundPoliBtn.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
-    		panel.removeAll();
+//    		panel.removeAll();
     		System.out.println("Donate clicked!");
 //    		FundPoliDialog id = new FundPoliDialog(frame, database, charID);
     		JOptionPane.showMessageDialog(frame, "Fund a Politician!", "Donate...", JOptionPane.INFORMATION_MESSAGE);
