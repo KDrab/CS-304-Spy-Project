@@ -1,0 +1,5 @@
+Schema Changes:
+
+We changed action so that its foreign key is now related to player,
+not character. We also removed the admin table and made it a field of
+the player table. There are no more changes.
