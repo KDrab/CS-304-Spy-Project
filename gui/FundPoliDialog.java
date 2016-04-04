@@ -33,7 +33,7 @@ public class FundPoliDialog extends JDialog {
 	public int appHeight = 480;
 	public boolean isAdmin = false;
 	
-	public FundPoliDialog(JFrame parent, Database database, String charID) {
+	public FundPoliDialog(JFrame parent, Database database) {
 		   super(parent, "Fund a Politician", true);
 		    
 	       frame = new JFrame("Fund a Politician");
@@ -45,7 +45,7 @@ public class FundPoliDialog extends JDialog {
 	       panel = new JPanel(new GridBagLayout());
 	       cs = new GridBagConstraints();
 	       frame.add(panel);
-	        
+	       String charID = "";
 	       this.displayPoliList(charID, 0, 1);
 	}
 	

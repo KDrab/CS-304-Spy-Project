@@ -295,7 +295,7 @@ public class Homepage extends JFrame {
     			} else if (type == 3) {
     				// character is a businessman
     				panel.setBackground(Color.blue);
-    				displayFundPoliticianButton(0, 12, selected);
+    				displayFundPoliticianButton(0, 12);
     				displayPaySpyButton(0, 13, selected);
     			}
     			
@@ -399,14 +399,14 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     }
     
-    public void displayFundPoliticianButton(int x, int y, String charID) {
+    public void displayFundPoliticianButton(int x, int y) {
     	JButton fundPoliBtn = new JButton("Donate...");
     	fundPoliBtn.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
 //    		panel.removeAll();
     		System.out.println("Donate clicked!");
-//    		FundPoliDialog id = new FundPoliDialog(frame, database, charID);
-    		JOptionPane.showMessageDialog(frame, "Fund a Politician!", "Donate...", JOptionPane.INFORMATION_MESSAGE);
+    		FundPoliDialog id = new FundPoliDialog(frame, database);
+//    		JOptionPane.showMessageDialog(frame, "Fund a Politician!", "Donate...", JOptionPane.INFORMATION_MESSAGE);
     		fundPoliBtn.setSelected(false);
     	}});
     	cs.gridx = x;

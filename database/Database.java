@@ -503,7 +503,6 @@ public class Database {
 				characterFrom.add(rs.getString("cash"));
 				}
 			}
-		 if (Integer.getInteger(characterFrom.get(1)) >= amt){
 			 Statement transfer = con.createStatement();
 			 transfer.executeQuery("UPDATE character"
 			 						+ "SET cash = " + (Integer.getInteger(characterTo.get(1)) + amt)
@@ -513,11 +512,6 @@ public class Database {
 			 debit.executeQuery("UPDATE character"
 			 					+ "SET cash = " + (Integer.getInteger(characterFrom.get(1)) - amt)
 			 					+ "WHERE id = '" + characterFrom.get(0) + "'");
-		 }
-		 else {
-			 throw new Exception();
-		 }
-			
 		}
 		catch (Exception e){
 			System.err.println("Unable to Process Transaction - Not Enough Cash");

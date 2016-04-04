@@ -37,7 +37,8 @@ create table character
 	teamName char(20),
 	primary key (id),
 	foreign key (email) references player ON DELETE CASCADE,
-	foreign key (teamName) references team ON DELETE CASCADE);
+	foreign key (teamName) references team ON DELETE CASCADE,
+	check (cash > 0));
 
 create table spy
 	(id char(10) not null,
