@@ -58,6 +58,7 @@ public class Homepage extends JFrame {
         			displayLoserButton();
         			displayTeamList();
         			displayFindPlayerButton();
+        			displaytopcharlist();
         			frame.repaint();
         			isAdmin = true;
         			return;
@@ -441,5 +442,27 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     	
     }
+    public void displaytopcharlist() {
+    	
+    	ArrayList<String> chars = database.gettopchar();
+    	TableView charListModel = new TableView(new String[]{"Top Players"}, 0);
+    	
+    	JTable charList = new JTable(charListModel);
+    	
+    	for (int i = 0; i < chars.size(); i++) {
+    		String[] toAdd = new String[1];
+    		toAdd[0] = chars.get(i);
+    		charListModel.addRow(toAdd);
+    	}
+    	GridBagConstraints cs1 = new GridBagConstraints();
+    	cs1.gridx = 0;
+    	cs1.gridy = 30;
+    	JScrollPane pane = new JScrollPane(charList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+    													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    	pane.setPreferredSize(new Dimension(appWidth/2, Math.min(20 + chars.size() * 32, 132)));
+    	panel.add(pane, cs1);
+    	frame.setVisible(true);
+    }
+
 
 }

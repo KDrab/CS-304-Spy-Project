@@ -701,5 +701,28 @@ public class Database {
 		return null;
 		
 	}
+	
+	public ArrayList<String> gettopchar(){
 		
+		try{
+			ArrayList<String> players = new ArrayList<String>();
+            
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT p.username FROM player p WHERE NOT EXISTS (SELECT * FROM action a WHERE NOT EXISTS (SELECT * FROM action a1 WHERE a1.email = p.email AND a.action = a1.action))"
+            );
+        
+            while (rs.next()) {
+                players.add(rs.getString("username"));
+            }
+        
+            return players;
+			
+		}
+		catch(Exception e){
+			System.err.println("Got a topchar exception! ");
+            System.err.println(e.getMessage());
+            return null;
+		}
+	}
 }
+	
