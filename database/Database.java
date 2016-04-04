@@ -1,8 +1,13 @@
 package database;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import javax.swing.JOptionPane;
+
+import gui.Homepage;
 
 public class Database {
 	private Connection con;
@@ -377,7 +382,7 @@ public class Database {
 		try {
 
 			this.con = DriverManager.getConnection(
-					  "jdbc:oracle:thin:@localhost:1522:ug", "ora_q0b9", "a48197123");
+					  "jdbc:oracle:thin:@localhost:1522:ug", "ora_o3g9", "a48215123");
 
 		} catch (SQLException e) {
 
@@ -487,34 +492,40 @@ public class Database {
 	public void transferMoney(String to, String from, int amt) {
 		try{
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select id, cash from character where id = '" + to
-																					+ "' or id = '" + from + "'");
+			ResultSet rs = stmt.executeQuery("select name, cash from character where name = '" + to
+																					+ "' or name = '" + from + "'");
 			
-			ArrayList<String> characterTo = new ArrayList<String>();
-			ArrayList<String> characterFrom = new ArrayList<String>();
+			ArrayList<String> characters = new ArrayList<String>();
 			
+
 			while (rs.next()){
-				if (rs.getString("id").equals(to)){
-				characterTo.add(rs.getString("id"));
-				characterTo.add(rs.getString("cash"));
-				}
-				else if (rs.getString("id").equals(from)){
-				characterFrom.add(rs.getString("id"));
-				characterFrom.add(rs.getString("cash"));
-				}
+
+//				if (rs.getString("name").equals(to)){
+				characters.add(rs.getString("name").trim());
+				characters.add(rs.getString("cash"));
+//				}
 			}
-			 Statement transfer = con.createStatement();
-			 transfer.executeQuery("UPDATE character"
-			 						+ "SET cash = " + (Integer.getInteger(characterTo.get(1)) + amt)
-			 						+ " WHERE id = '" + characterTo.get(0) + "'");
+			
+			System.out.println(characters);
+			System.out.println(amt);
+			
 			 
 			 Statement debit = con.createStatement();
-			 debit.executeQuery("UPDATE character"
-			 					+ "SET cash = " + (Integer.getInteger(characterFrom.get(1)) - amt)
-			 					+ "WHERE id = '" + characterFrom.get(0) + "'");
+			 debit.executeUpdate("UPDATE character "
+			 					+ "SET cash = " + (Integer.parseInt(characters.get(3)) - amt)
+			 					+ "WHERE name = '" + characters.get(2) + "'");
+
+			 Statement transfer = con.createStatement();
+			 transfer.executeUpdate("UPDATE character "
+			 						+ "SET cash = " + (Integer.parseInt(characters.get(1)) + amt)
+			 						+ " WHERE name = '" + characters.get(0) + "'");
+
 		}
-		catch (Exception e){
+		catch (SQLException e){
 			System.err.println("Unable to Process Transaction - Not Enough Cash");
+            System.err.println(e.getMessage());
+    		Homepage.popup();
+
 			
 		}
 		

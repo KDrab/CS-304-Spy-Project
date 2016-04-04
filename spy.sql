@@ -26,6 +26,10 @@ create table player
 	admin	 int null,
 	primary key (email));
 
+create table team
+	(name char(20) not null,
+	primary key (name));
+
 ----------------------------
 
 create table character
@@ -39,6 +43,14 @@ create table character
 	foreign key (email) references player ON DELETE CASCADE,
 	foreign key (teamName) references team ON DELETE CASCADE,
 	check (cash > 0));
+
+create table government
+	(name char(20) not null,
+	president char(10) not null,
+	defcon int null,
+	tax int null,
+	primary key (name),
+	foreign key (president) references character ON DELETE CASCADE);
 
 create table spy
 	(id char(10) not null,
@@ -69,12 +81,12 @@ create table politician
 
 ------------------------------------------
 
-create table action (id char(10) not null,
+create table action 
+ (id char(10) not null,
  email char(20) null,
  time int not null,
  action int null,
  primary key (id, time),
- foreign key (id) references character,
  foreign key (email) references player ON DELETE SET NULL);
 -----------------------------------------
 
@@ -90,7 +102,7 @@ create table message
 create table kills
 	(spy char(10) not null,
 	victim char(10) not null,
-	killed byte null,
+	killed int null,
 	primary key (spy, victim),
 	foreign key (spy) references spy ON DELETE CASCADE,
 	foreign key (victim) references character ON DELETE CASCADE);
@@ -105,17 +117,6 @@ create table intercepts
 	foreign key (victim) references character ON DELETE CASCADE);
 -----------------------------------------------------
 
-create table team
-	(name char(20) not null,
-	primary key (name));
-
-create table government
-	(name char(20) not null,
-	president char(10) not null,
-	defcon int null,
-	tax int null,
-	primary key (name),
-	foreign key (president) references character ON DELETE CASCADE);
 -----------------------------------------------------
 
 insert into team
@@ -129,13 +130,16 @@ values('other team');
 -----------------------------------------------------
 
 insert into player
-values('player1@gmail.com', 'player1', 'password1');
+values('player1@gmail.com', 'player1', 'password1', 0);
 
 insert into player
-values('player2@gmail.com', 'player2', 'password2');
+values('player2@gmail.com', 'player2', 'password2', 0);
 
 insert into player
-values('player3@gmail.com', 'player3', 'password3');
+values('player3@gmail.com', 'player3', 'password3', 0);
+
+insert into player
+	values ('admin@admin.com', 'admin', 'admin', 1);
 -----------------------------------------------------
 
 insert into character
@@ -157,6 +161,9 @@ insert into character
 values(31, 'Character 3a', 1, 20, 'player3@gmail.com', 'other team');
 -----------------------------------------------------
 
+insert into government
+values('the gov', 22, 2, 10);
+
 insert into spy
 values(21, 'Character 2a', 21, 'the gov');
 
@@ -167,8 +174,7 @@ insert into businessman
 values(23, 'Character 2c', 43, 'the gov');
 -----------------------------------------------------
 
-insert into government
-values('the gov', 22, 2, 10);
+
 
 insert into action 
 values(11, 'player1@gmail.com', 21, 1);

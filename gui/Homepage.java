@@ -13,7 +13,7 @@ import database.Database;
 
 public class Homepage extends JFrame {
 	public Database database; 
-	public JFrame frame;
+	public static JFrame frame;
 	public JPanel panel;
 	public GridBagConstraints cs;
 	public JTable playerList;
@@ -408,6 +408,7 @@ public class Homepage extends JFrame {
     		FundPoliDialog id = new FundPoliDialog(frame, database);
 //    		JOptionPane.showMessageDialog(frame, "Fund a Politician!", "Donate...", JOptionPane.INFORMATION_MESSAGE);
     		fundPoliBtn.setSelected(false);
+    		id.setVisible(true);
     	}});
     	cs.gridx = x;
     	cs.gridy = y;
@@ -485,4 +486,9 @@ public class Homepage extends JFrame {
     	frame.setVisible(true);
     	
     }	
+    
+    public static void popup(){
+		JOptionPane.showMessageDialog(frame, "NOT ENOUGH MONEY", "NOT ENOUGH MONEY", JOptionPane.INFORMATION_MESSAGE);
+
+    }
 }
