@@ -57,7 +57,6 @@ public class Homepage extends JFrame {
         			displayWinnerButton();
         			displayLoserButton();
         			displayTeamList();
-        			displayPlayerList();
         			displayFindPlayerButton();
         			displayDeleteButton();
         			displaytopcharlist();
