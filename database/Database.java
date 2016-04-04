@@ -104,7 +104,7 @@ public class Database {
         Statement stmt = con.createStatement();
         String queryString = "insert into player values(" + "'" + email + "', "
         												+ "'" + username + "', "
-        												+ "'" + password + "'" + ")";
+        												+ "'" + password + "', " + "0)";
         ResultSet rs = stmt.executeQuery(queryString);
         
 	}
@@ -724,5 +724,19 @@ public class Database {
             return null;
 		}
 	}
+	
+	public void deletePlayer(String email){
+			
+			try {
+				Statement stmt = con.createStatement();
+				stmt.executeUpdate("DELETE FROM player where email = " + "'" + email + "'");
+				
+			} 
+			catch(Exception e) {
+				System.err.println("Got a delete exception! ");
+	            System.err.println(e.getMessage());
+			}
+		}
+
 }
 	

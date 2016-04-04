@@ -68,13 +68,13 @@ create table politician
 
 ------------------------------------------
 
-create table action
-	(id char(20) not null,
-	time int not null,
-	action int null,
-	primary key (id, time),
-	foreign key (id) references character
-	ON DELETE CASCADE);
+create table action (id char(10) not null,
+ email char(20) null,
+ time int not null,
+ action int null,
+ primary key (id, time),
+ foreign key (id) references character,
+ foreign key (email) references player ON DELETE SET NULL);
 -----------------------------------------
 
 create table message
@@ -168,6 +168,42 @@ values(23, 'Character 2c', 43, 'the gov');
 
 insert into government
 values('the gov', 22, 2, 10);
+
+insert into action 
+values(11, 'player1@gmail.com', 21, 1);
+
+insert into action 
+values(11,'player1@gmail.com', 22, 2);
+
+insert into action 
+values(11, 'player1@gmail.com', 23, 3);
+
+insert into action 
+values(11, 'player1@gmail.com', 24, 4);
+
+insert into action 
+values(11, 'player1@gmail.com', 25, 5);
+
+insert into action 
+values(11, 'player1@gmail.com', 26, 6);
+
+insert into action 
+values(21, 'player2@gmail.com', 27, 2);
+
+insert into action 
+values(12, 'player2@gmail.com', 28, 3);
+
+insert into action 
+values(12, 'player2@gmail.com', 29, 4);
+
+insert into action 
+values(12, 'player2@gmail.com', 30, 5);
+
+insert into action 
+values(23, 'player2@gmail.com', 21, 5);
+
+insert into action 
+values(31, 'player3@gmail.com', 21, 2);
 
 
 

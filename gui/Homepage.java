@@ -57,7 +57,9 @@ public class Homepage extends JFrame {
         			displayWinnerButton();
         			displayLoserButton();
         			displayTeamList();
+        			displayPlayerList();
         			displayFindPlayerButton();
+        			displayDeleteButton();
         			displaytopcharlist();
         			frame.repaint();
         			isAdmin = true;
@@ -139,7 +141,7 @@ public class Homepage extends JFrame {
         System.out.println("Top displayTeamList");
     	
     	cs.gridx = 0;
-    	cs.gridy = 5;
+    	cs.gridy = 6;
     	JScrollPane pane = new JScrollPane(teamList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
     													JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     	pane.setPreferredSize(new Dimension(appWidth/3, Math.min(20 + teams.size() * 16, 132)));
@@ -159,10 +161,14 @@ public class Homepage extends JFrame {
     			displayLogoutButton();
     			displayWinnerButton();
     			displayLoserButton();
+    			displayFindPlayerButton();
+    			displayDeleteButton();
     			cs.gridx = 0;
     	    	cs.gridy = 10;
     			panel.add(pane, cs);
+    			displaytopcharlist();
     			displayTeamStats(selected, 0, 11);
+    			frame.pack();
     			frame.repaint();
     			
     		}
@@ -463,6 +469,21 @@ public class Homepage extends JFrame {
     	panel.add(pane, cs1);
     	frame.setVisible(true);
     }
-
-
+    
+    public void displayDeleteButton(){
+    	JButton deleteButton = new JButton("Delete Player");
+    	cs.gridx = 0;
+    	cs.gridy = 5;
+    	panel.add(deleteButton, cs);
+    	
+    	deleteButton.addActionListener(new ActionListener(){
+    		public void actionPerformed(ActionEvent e){
+    			DeleteDialog dd = new DeleteDialog(frame, database);
+    			dd.setVisible(true);
+    			
+    		}
+    	});
+    	frame.setVisible(true);
+    	
+    }	
 }
